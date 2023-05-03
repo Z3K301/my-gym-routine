@@ -19,7 +19,6 @@ import { Link as RouterLink } from "react-router-dom";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
-
   return (
     <Box>
       <Flex
@@ -51,12 +50,10 @@ export default function NavBar() {
           <Link as={RouterLink} to="/">
             <Image src="/logo192.png" boxSize="30px" alt="logo" />
           </Link>
-
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={"flex-end"}
@@ -65,31 +62,25 @@ export default function NavBar() {
         >
           <ColorModeSwitcher justifySelf="flex-end" />
           <Button
-            as={"a"}
+            as={RouterLink}
+            to="/login"
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"#"}
           >
             Sign In
           </Button>
           <Button
             as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}
             fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
+            colorScheme="teal"
             href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
           >
             Sign Up
           </Button>
         </Stack>
       </Flex>
-
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>

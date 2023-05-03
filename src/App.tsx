@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ClickCounter from "./components/ClickCounter";
 import ChuckJokes from "./components/ChuckJokes";
 import NavBar from "./components/navBar/NavBar";
+import PrivateRoute from "./router/PrivateRoute";
+import Login from "./components/Login";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -12,7 +14,11 @@ export const App = () => (
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
             <Route path="/" element={<ClickCounter />} />
-            <Route path="/chuck" element={<ChuckJokes />} />
+            <Route path="/login" element={<Login />} />
+            {/* Private Routes */}
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/chuck" element={<ChuckJokes />} />
+            </Route>
           </Routes>
         </Grid>
       </Box>
