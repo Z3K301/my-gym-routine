@@ -16,7 +16,7 @@ export const App = () => (
           <Routes>
             <Route path="/" element={<ClickCounter />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/signup" element={<Register />} />
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/chuck" element={<ChuckJokes />} />

@@ -14,7 +14,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MovileNav";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function NavBar() {
@@ -71,11 +71,11 @@ export default function NavBar() {
             Sign In
           </Button>
           <Button
-            as={"a"}
+            as={RouterLink}
             fontSize={"sm"}
             fontWeight={600}
             colorScheme="teal"
-            href={"#"}
+            to="/signup"
           >
             Sign Up
           </Button>

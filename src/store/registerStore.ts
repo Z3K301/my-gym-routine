@@ -11,11 +11,15 @@ interface IRegisterStore {
   setShowPassword: () => void;
   register: () => void;
 }
-export const useRegisterStore = create<IRegisterStore>((set) => ({
+
+const initialState = {
   user: "",
   mail: "",
   password: "",
   showPassword: false,
+};
+export const useRegisterStore = create<IRegisterStore>((set) => ({
+  ...initialState,
   setUser: (text) => {
     set(() => ({ user: text }));
   },
@@ -30,7 +34,7 @@ export const useRegisterStore = create<IRegisterStore>((set) => ({
   },
   register: async () => {
     //TODO login call and set logged in true
-    set(() => ({ user: "", mail: "", password: "", password2: "" }));
+    set(() => ({ ...initialState }));
     //TODO redirect
   },
 }));

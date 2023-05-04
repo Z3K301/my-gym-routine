@@ -4,12 +4,14 @@ interface PasswordInputProps {
   password: string;
   setShowPassword: () => void;
   setPassword: (value: string) => void;
+  submit: () => void;
 }
 const PasswordInput = ({
   showPassword,
   password,
   setShowPassword,
   setPassword,
+  submit,
 }: PasswordInputProps) => {
   return (
     <InputGroup size="md" marginBottom={"8px"}>
@@ -19,6 +21,7 @@ const PasswordInput = ({
         placeholder="Enter password"
         value={password}
         onChange={({ target }) => setPassword(target.value)}
+        onKeyDown={(e) => e.key === "Enter" && submit()}
       />
       <InputRightElement width="4.5rem">
         <Button h="1.75rem" size="sm" onClick={setShowPassword}>

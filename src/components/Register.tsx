@@ -24,21 +24,23 @@ const Register = () => {
     setShowPassword,
     register,
   } = useRegisterStore((state) => state);
+
   const [errors, setErrors] = useState({
     user: false,
     mail: false,
     password: false,
   });
+
   const handleRegister = () => {
-    //     if (checkMail(mail)) {
-    //       register();
-    //     } else {
-    //     }
-    setErrors({
-      user: true,
-      mail: true,
-      password: true,
-    });
+    const newErrors = {
+      user: user.length === 0,
+      mail: !checkMail(mail),
+      password: password.length === 0,
+    };
+    setErrors(newErrors);
+    if (!newErrors.user && !newErrors.mail && !newErrors.password) {
+      register();
+    }
   };
   return (
     <Center>
@@ -69,6 +71,7 @@ const Register = () => {
             setPassword={setPassword}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
+            submit={handleRegister}
           />
         </FormControl>
         <Flex>

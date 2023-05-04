@@ -1,34 +1,65 @@
-import { Box, Button, Center, Flex, Input, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  FormControl,
+  Input,
+  Spacer,
+  useToast,
+} from "@chakra-ui/react";
 import { useAuthStore } from "../store/authStore";
 import PasswordInput from "./forms/PasswordInput";
+import { useEffect } from "react";
 
 const Login = () => {
   const {
     user,
     password,
     showPassword,
+    isError,
     login,
     setShowPassword,
     setPassword,
     setUser,
+    changeIsError,
   } = useAuthStore((state) => state);
+  const toast = useToast();
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: "Error",
+        description: "Invalid credentials",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        onCloseComplete() {
+          changeIsError();
+        },
+      });
+    }
+  }, [isError]);
+
   return (
     <Center>
       <Box>
         <h1>Login</h1>
-        <Input
-          pr="4.5rem"
-          placeholder="User"
-          value={user}
-          onChange={({ target }) => setUser(target.value)}
-          marginBottom={"5px"}
-        />
-        <PasswordInput
-          password={password}
-          setPassword={setPassword}
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
-        />
+        <FormControl isInvalid={isError}>
+          <Input
+            pr="4.5rem"
+            placeholder="User"
+            value={user}
+            onChange={({ target }) => setUser(target.value)}
+            marginBottom={"5px"}
+          />
+          <PasswordInput
+            password={password}
+            setPassword={setPassword}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+            submit={login}
+          />
+        </FormControl>
         <Flex>
           <Spacer />
           <Button size="md" onClick={login} variant="outline">
