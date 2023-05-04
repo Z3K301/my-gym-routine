@@ -5,6 +5,7 @@ import ChuckJokes from "./components/ChuckJokes";
 import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./router/PrivateRoute";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -15,6 +16,7 @@ export const App = () => (
           <Routes>
             <Route path="/" element={<ClickCounter />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/chuck" element={<ChuckJokes />} />
