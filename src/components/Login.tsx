@@ -11,6 +11,7 @@ import {
 import { useAuthStore } from "../store/authStore";
 import PasswordInput from "./forms/PasswordInput";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -40,6 +41,13 @@ const Login = () => {
       });
     }
   }, [isError]);
+  const navigate = useNavigate();
+  const handleLogin = async () => {
+    const isLoggedIn = await login();
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  };
 
   return (
     <Center>
@@ -63,7 +71,7 @@ const Login = () => {
         </FormControl>
         <Flex>
           <Spacer />
-          <Button size="md" onClick={login} variant="outline">
+          <Button size="md" onClick={handleLogin} variant="outline">
             Login
           </Button>
         </Flex>

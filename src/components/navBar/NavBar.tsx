@@ -15,10 +15,16 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MovileNav";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <Box>
       <Flex
@@ -61,24 +67,40 @@ export default function NavBar() {
           spacing={6}
         >
           <ColorModeSwitcher justifySelf="flex-end" />
-          <Button
-            as={RouterLink}
-            to="/login"
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={RouterLink}
-            fontSize={"sm"}
-            fontWeight={600}
-            colorScheme="teal"
-            to="/signup"
-          >
-            Sign Up
-          </Button>
+
+          {!localStorage.getItem("token") ? (
+            <>
+              <Button
+                as={RouterLink}
+                to="/login"
+                fontSize={"sm"}
+                fontWeight={400}
+                variant={"link"}
+              >
+                Sign In
+              </Button>
+              <Button
+                as={RouterLink}
+                fontSize={"sm"}
+                fontWeight={600}
+                colorScheme="teal"
+                to="/signup"
+              >
+                Sign Up
+              </Button>{" "}
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={handleLogout}
+                fontSize={"sm"}
+                fontWeight={400}
+                variant={"link"}
+              >
+                Sign Out
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
