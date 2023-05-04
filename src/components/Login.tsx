@@ -25,6 +25,7 @@ const Login = () => {
     changeIsError,
   } = useAuthStore((state) => state);
   const toast = useToast();
+
   useEffect(() => {
     if (isError) {
       toast({

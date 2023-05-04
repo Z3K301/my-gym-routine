@@ -6,6 +6,7 @@ import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./router/PrivateRoute";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import { UnloggedUser } from "./router/UnloggedUser";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -15,8 +16,11 @@ export const App = () => (
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
             <Route path="/" element={<ClickCounter />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
+            {/* Unlogged User Routes */}
+            <Route path="/" element={<UnloggedUser />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Register />} />
+            </Route>
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/chuck" element={<ChuckJokes />} />

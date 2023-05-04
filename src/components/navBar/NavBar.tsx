@@ -46,7 +46,7 @@ export default function NavBar() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+        <Flex flex={{ base: 2 }} justify={{ base: "left", md: "start" }}>
           <Link as={RouterLink} to="/">
             <Image src="/logo192.png" boxSize="30px" alt="logo" />
           </Link>
