@@ -1,12 +1,12 @@
 import { ChakraProvider, Box, Grid, theme } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ClickCounter from "./components/ClickCounter";
 import ChuckJokes from "./components/ChuckJokes";
 import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./router/PrivateRoute";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { UnloggedUser } from "./router/UnloggedUser";
+import HomeScreen from "./components/HomeScreen";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -15,7 +15,7 @@ export const App = () => (
       <Box textAlign="center" fontSize="xl">
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
-            <Route path="/" element={<ClickCounter />} />
+            <Route path="/" element={<HomeScreen />} />
             {/* Unlogged User Routes */}
             <Route path="/" element={<UnloggedUser />}>
               <Route path="/login" element={<Login />} />
