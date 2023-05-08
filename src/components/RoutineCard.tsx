@@ -1,21 +1,25 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { Badge, Box, Image } from "@chakra-ui/react";
+import { RoutineList } from "../interfaces/RoutineList";
 
-const MyCard = ({}) => {
-  const property = {
-    imageUrl: "https://bit.ly/2Z4KKcF",
-    imageAlt: "Rear view of modern home with pool",
-    exercices: 3,
-    time: 2,
-    title: "Leg Routine to build muscle",
-    category: "Leg",
-    reviewCount: 34,
-    rating: 4,
-  };
-
+const RoutineCard = ({
+  imageUrl,
+  exercices,
+  time,
+  title,
+  category,
+  reviewCount,
+  rating,
+}: RoutineList) => {
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Image src={property.imageUrl} alt={property.imageAlt} />
+    <Box
+      maxW="sm"
+      minW="sm"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+    >
+      <Image src={imageUrl} />
 
       <Box p="6">
         <Box display="flex" alignItems="baseline">
@@ -30,7 +34,7 @@ const MyCard = ({}) => {
             textTransform="uppercase"
             ml="2"
           >
-            {property.exercices} exercices &bull; {property.time} time
+            {exercices} exercices &bull; {time} time
           </Box>
         </Box>
 
@@ -41,27 +45,19 @@ const MyCard = ({}) => {
           lineHeight="tight"
           noOfLines={1}
         >
-          {property.title}
+          {title}
         </Box>
 
-        <Box>
-          {property.category}
-          <Box as="span" color="gray.600" fontSize="sm">
-            / wk
-          </Box>
-        </Box>
+        <Box>{category}</Box>
 
         <Box display="flex" mt="2" alignItems="center">
           {Array(5)
             .fill("")
             .map((_, i) => (
-              <StarIcon
-                key={i}
-                color={i < property.rating ? "teal.500" : "gray.300"}
-              />
+              <StarIcon key={i} color={i < rating ? "teal.500" : "gray.300"} />
             ))}
           <Box as="span" ml="2" color="gray.600" fontSize="sm">
-            {property.reviewCount} reviews
+            {reviewCount} reviews
           </Box>
         </Box>
       </Box>
@@ -69,4 +65,4 @@ const MyCard = ({}) => {
   );
 };
 
-export default MyCard;
+export default RoutineCard;
