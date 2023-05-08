@@ -18,6 +18,7 @@ const RoutineCard = ({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
+      marginBottom="2"
     >
       <Image src={imageUrl} />
 
@@ -31,10 +32,9 @@ const RoutineCard = ({
             fontWeight="semibold"
             letterSpacing="wide"
             fontSize="xs"
-            textTransform="uppercase"
             ml="2"
           >
-            {exercices} exercices &bull; {time} time
+            {exercices} EXERCICES &bull; {time}h
           </Box>
         </Box>
 

@@ -5,11 +5,12 @@ interface RoutineListStore {
   routineList: RoutineList[];
   fetchRoutineList: () => Promise<void>;
   addRoutineElement: (routineElement: RoutineList) => void;
+  clearList: () => void;
 }
 
 const initialState: RoutineList[] = [];
 
-export const useRoutineListStore = create<RoutineListStore>((set, get) => ({
+export const useRoutineListStore = create<RoutineListStore>((set) => ({
   routineList: initialState,
   fetchRoutineList: async () => {
     //TODO fetch
@@ -18,7 +19,7 @@ export const useRoutineListStore = create<RoutineListStore>((set, get) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: 2,
+          time: "2",
           title: "Leg Routine to build muscle",
           category: "Leg",
           reviewCount: 34,
@@ -28,7 +29,7 @@ export const useRoutineListStore = create<RoutineListStore>((set, get) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: 2,
+          time: "2",
           title: "Leg Routine to build muscle",
           category: "Leg",
           reviewCount: 34,
@@ -38,7 +39,7 @@ export const useRoutineListStore = create<RoutineListStore>((set, get) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: 2,
+          time: "2",
           title: "Leg Routine to build muscle",
           category: "Leg",
           reviewCount: 34,
@@ -52,5 +53,8 @@ export const useRoutineListStore = create<RoutineListStore>((set, get) => ({
     set((state) => ({
       routineList: [routineElement, ...state.routineList],
     }));
+  },
+  clearList: () => {
+    set(() => ({ routineList: initialState }));
   },
 }));
