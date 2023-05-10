@@ -11,7 +11,7 @@ const initialState: RoutineList = {
   exercices: 0,
   time: "0:00",
   title: "",
-  category: "",
+  category: [],
   reviewCount: 0,
   rating: 0,
   id: 0,

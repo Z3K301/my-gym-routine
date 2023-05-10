@@ -87,10 +87,12 @@ const NewRoutitne = ({
 
             <Box>
               <FormLabel htmlFor="category">Select category</FormLabel>
+              {/* TODO cambiar a otro muliselect */}
               <Select
                 id="category"
-                defaultValue="leg"
+                defaultValue={[]}
                 value={form.category}
+                multiple
                 onChange={({ target }) => setProperty("category", target.value)}
               >
                 <option value="leg">Leg</option>

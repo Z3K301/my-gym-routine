@@ -3,7 +3,7 @@ export interface RoutineList {
   exercices: number;
   time: string;
   title: string;
-  category: string;
+  category: string[];
   reviewCount: number;
   rating: number;
   id: number;
