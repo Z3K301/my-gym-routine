@@ -21,7 +21,7 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
           exercices: 3,
           time: "2",
           title: "Leg Routine to build muscle",
-          category: ["Leg"],
+          category: ["Chest", "Triceps", "Shoulders"],
           reviewCount: 34,
           rating: 4,
           id: 1,
