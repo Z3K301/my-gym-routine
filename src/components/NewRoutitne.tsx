@@ -14,10 +14,13 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNewRoutineListStore } from "../store/newRoutineListStore";
 import { RoutineList } from "../interfaces/RoutineList";
 import MyNumberInput from "./forms/MyNumberInput";
+import SearchInput from "./forms/SearchInput";
+import { useSearchStore } from "../store/searchStore";
+import ImageSelector from "./ImageSelector";
 interface NewRoutitneProps {
   isOpen: boolean;
   closeAction: () => void;
@@ -30,6 +33,12 @@ const NewRoutitne = ({
 }: NewRoutitneProps) => {
   const firstField = useRef<HTMLInputElement>(null);
   const { form, setProperty } = useNewRoutineListStore((state) => state);
+  const selectedImage = useSearchStore((state) => state.selected);
+  useEffect(() => {
+    if (selectedImage.length > 0) {
+      setProperty("imageUrl", selectedImage);
+    }
+  }, [selectedImage]);
   return (
     <Drawer
       isOpen={isOpen}
@@ -56,17 +65,23 @@ const NewRoutitne = ({
             </Box>
 
             <Box>
-              <FormLabel htmlFor="url">Url</FormLabel>
+              <FormLabel htmlFor="url">Image</FormLabel>
               <InputGroup>
-                <Input
-                  type="url"
-                  id="url"
-                  placeholder="Please enter a image"
-                  value={form.imageUrl}
-                  onChange={({ target }) =>
-                    setProperty("imageUrl", target.value)
-                  }
-                />
+                {form.imageUrl.length > 0 ? (
+                  <Input
+                    type="url"
+                    id="url"
+                    value={form.imageUrl}
+                    onChange={({ target }) =>
+                      setProperty("imageUrl", target.value)
+                    }
+                  />
+                ) : (
+                  <>
+                    <SearchInput />
+                    <ImageSelector />
+                  </>
+                )}
               </InputGroup>
             </Box>
 
