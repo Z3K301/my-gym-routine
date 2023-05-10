@@ -35,6 +35,7 @@ const ImageSelector = () => {
                   boxSize="150px"
                   objectFit={"cover"}
                   onClick={() => setSelected(img)}
+                  cursor={"pointer"}
                 />
               </WrapItem>
             ))}

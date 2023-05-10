@@ -11,7 +11,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  Select,
   Stack,
 } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
@@ -21,6 +20,7 @@ import MyNumberInput from "./forms/MyNumberInput";
 import SearchInput from "./forms/SearchInput";
 import { useSearchStore } from "../store/searchStore";
 import ImageSelector from "./ImageSelector";
+import MultiSelect from "./forms/MultiSelect";
 interface NewRoutitneProps {
   isOpen: boolean;
   closeAction: () => void;
@@ -88,16 +88,12 @@ const NewRoutitne = ({
             <Box>
               <FormLabel htmlFor="category">Select category</FormLabel>
               {/* TODO cambiar a otro muliselect */}
-              <Select
-                id="category"
-                defaultValue={[]}
+              <MultiSelect
+                label="Category"
+                options={["Leg", "Chest"]}
+                onChange={(value) => setProperty("category", value)}
                 value={form.category}
-                multiple
-                onChange={({ target }) => setProperty("category", target.value)}
-              >
-                <option value="leg">Leg</option>
-                <option value="chest">Chest</option>
-              </Select>
+              />
             </Box>
 
             <Box>
