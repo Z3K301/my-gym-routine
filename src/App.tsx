@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
+import RoutineBreakdown from "./components/RoutineBreakdown";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -24,6 +25,7 @@ export const App = () => (
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/chuck" element={<ChuckJokes />} />
+              <Route path="/routine/:id" element={<RoutineBreakdown />} />
             </Route>
           </Routes>
         </Grid>
