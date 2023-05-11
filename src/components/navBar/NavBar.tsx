@@ -53,7 +53,7 @@ export default function NavBar() {
           />
         </Flex>
         <Flex flex={{ base: 2 }} justify={{ base: "left", md: "start" }}>
-          <Link as={RouterLink} to="/">
+          <Link as={RouterLink} to="/home">
             <Image src="/logo192.png" boxSize="30px" alt="logo" />
           </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>

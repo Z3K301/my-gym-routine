@@ -8,6 +8,7 @@ import Register from "./components/Register";
 import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
 import RoutineBreakdown from "./components/RoutineBreakdown";
+import ClickCounter from "./components/ClickCounter";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -16,15 +17,17 @@ export const App = () => (
       <Box textAlign="center" fontSize="xl">
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/chuck" element={<ChuckJokes />} />
             {/* Unlogged User Routes */}
             <Route path="/" element={<UnloggedUser />}>
+              {/* TODO change / to landing page */}
+              <Route path="/landing" element={<ClickCounter />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Register />} />
             </Route>
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
-              <Route path="/chuck" element={<ChuckJokes />} />
+              <Route path="/home" element={<HomeScreen />} />
               <Route path="/routine/:id" element={<RoutineBreakdown />} />
             </Route>
           </Routes>

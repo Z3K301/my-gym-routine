@@ -45,7 +45,7 @@ const Login = () => {
   const handleLogin = async () => {
     const isLoggedIn = await login();
     if (isLoggedIn) {
-      navigate("/");
+      navigate("/home");
     }
   };
 
