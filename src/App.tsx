@@ -1,5 +1,10 @@
 import { ChakraProvider, Box, Grid, theme } from "@chakra-ui/react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import ChuckJokes from "./components/ChuckJokes";
 import NavBar from "./components/navBar/NavBar";
 import PrivateRoute from "./router/PrivateRoute";
@@ -18,6 +23,7 @@ export const App = () => (
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
             <Route path="/chuck" element={<ChuckJokes />} />
+            <Route path="/" element={<Navigate to="/home" />} />
             {/* Unlogged User Routes */}
             <Route path="/" element={<UnloggedUser />}>
               {/* TODO change / to landing page */}
