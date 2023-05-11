@@ -17,6 +17,7 @@ const defaultExercice: Exercice = {
   sets: 0,
   reps: 0,
   image: "",
+  weight: 0,
 };
 export const useRoutineStore = create<RoutineStore>((set) => ({
   routine: [],
@@ -31,6 +32,7 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
           muscle: "Quads",
           sets: 3,
           reps: 8,
+          weight: 100,
         },
       ],
     }));
@@ -45,7 +47,6 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
     property: string,
     value: string | number
   ) => {
-    console.log(position, property, value);
     set(({ routine }) => {
       routine[position][property as keyof Exercice] = value as never;
       return {

@@ -7,7 +7,11 @@ const SEARCH_ENGINE_ID = "f555f168acc9d40d8";
 interface imagePorp {
   link: string;
 }
-const SearchInput = () => {
+interface searchImputProps {
+  customAction?: () => void;
+  size?: string;
+}
+const SearchInput = ({ customAction, size }: searchImputProps) => {
   const { search, setSearch, setResults } = useSearchStore((state) => state);
   const handleSearch = async () => {
     const searchClient = new ImageSearchClient(
@@ -16,7 +20,7 @@ const SearchInput = () => {
     );
     const results = await searchClient.search(search);
     const links = results.map(({ link }: imagePorp) => link);
-    console.log(links);
+    customAction?.();
     setResults(links);
   };
   return (
@@ -28,9 +32,16 @@ const SearchInput = () => {
         value={search}
         onChange={({ target }) => setSearch(target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        size={size ?? "md"}
+        borderRadius="10"
       />
       <InputRightElement width="4.5rem">
-        <Button h="1.75rem" size="sm" onClick={handleSearch}>
+        <Button
+          h="1.5rem"
+          size="sm"
+          onClick={handleSearch}
+          marginTop={"-0.5rem"}
+        >
           search
         </Button>
       </InputRightElement>

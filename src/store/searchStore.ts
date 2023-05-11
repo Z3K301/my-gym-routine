@@ -18,7 +18,6 @@ export const useSearchStore = create<ISearchStore>((set) => ({
     set(() => ({ results }));
   },
   setSelected: (selected: string) => {
-    console.log(selected);
     set(() => ({ selected, search: "", results: [] }));
   },
 }));

@@ -6,13 +6,15 @@ import {
   IconButton,
   Image,
   Input,
+  InputGroup,
+  InputLeftAddon,
   Stack,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useRoutineStore } from "../store/routineStore";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import MyNumberInput from "./forms/MyNumberInput";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, EditIcon } from "@chakra-ui/icons";
 import SearchInput from "./forms/SearchInput";
 import ImageSelector from "./ImageSelector";
 import { useSearchStore } from "../store/searchStore";
@@ -28,18 +30,21 @@ const RoutineBreakdown = () => {
     fetchRoutine(Number(id));
   }, []);
 
-  //TODO change in a future version for replacing any exercise
+  const [searchIndex, setSearchIndex] = useState(0);
+  const [isReadOnly, setIsReadOnly] = useState(true);
+
   useEffect(() => {
     if (selected.length > 0) {
-      editExercice(routine.length - 1, "image", selected);
+      editExercice(searchIndex, "image", selected);
       setSelected("");
     }
   }, [selected]);
+
   return (
     <>
       <Center>
         <Container maxW="container.md" minW="container.sm" centerContent>
-          {routine.map(({ id, name, image, muscle, sets, reps }, i) => (
+          {routine.map(({ id, name, image, muscle, sets, reps, weight }, i) => (
             <Fragment key={`${id}-${i}`}>
               <Card
                 direction={{ base: "row", sm: "row" }}
@@ -48,14 +53,20 @@ const RoutineBreakdown = () => {
                 maxW="container.md"
                 minW="container.sm"
               >
-                <Image objectFit="cover" boxSize="170px" src={image} />
+                <Image objectFit="cover" boxSize="203px" src={image} />
 
                 <Stack>
                   <CardBody>
-                    {image.length === 0 && <SearchInput />}
+                    {image.length === 0 && (
+                      // TODO change component for multiple search
+                      <SearchInput
+                        customAction={() => setSearchIndex(i)}
+                        size="sm"
+                      />
+                    )}
                     <Input
-                      id="name"
-                      placeholder="Please enter a routine name"
+                      id={`name-${i}`}
+                      placeholder="Please enter a exercice name"
                       value={name}
                       onChange={({ target }) =>
                         editExercice(i, "name", target.value)
@@ -63,6 +74,7 @@ const RoutineBreakdown = () => {
                       fontWeight={"bold"}
                       size="sm"
                       variant="flushed"
+                      isReadOnly={isReadOnly}
                     />
                     <Input
                       id="muscle"
@@ -73,33 +85,107 @@ const RoutineBreakdown = () => {
                       }
                       size="sm"
                       variant="flushed"
+                      isReadOnly={isReadOnly}
                     />
-                    <MyNumberInput
-                      min={0}
-                      defaultValue={0}
-                      placeholder="Sets"
-                      value={sets}
-                      onChange={(valueString) =>
-                        editExercice(i, "sets", Number(valueString))
-                      }
-                      size="sm"
-                      variant="flushed"
-                    />
-                    <MyNumberInput
-                      min={0}
-                      defaultValue={0}
-                      placeholder="Reps"
-                      value={reps}
-                      onChange={(valueString) =>
-                        editExercice(i, "reps", Number(valueString))
-                      }
-                      size="sm"
-                      variant="flushed"
-                    />
+                    {isReadOnly ? (
+                      <>
+                        <InputGroup size="sm">
+                          <InputLeftAddon children="Sets" maxW="55" minW="55" />
+                          <Input
+                            value={sets}
+                            size="sm"
+                            variant="flushed"
+                            isReadOnly
+                            marginLeft={"10px"}
+                          />
+                        </InputGroup>
+
+                        <InputGroup size="sm">
+                          <InputLeftAddon children="Reps" maxW="55" minW="55" />
+                          <Input
+                            value={reps}
+                            size="sm"
+                            variant="flushed"
+                            isReadOnly
+                            marginLeft={"10px"}
+                          />
+                        </InputGroup>
+                        <InputGroup size="sm">
+                          <InputLeftAddon children="KG" maxW="55" minW="55" />
+                          <Input
+                            value={weight}
+                            size="sm"
+                            variant="flushed"
+                            isReadOnly
+                            marginLeft={"10px"}
+                          />
+                        </InputGroup>
+                      </>
+                    ) : (
+                      <>
+                        <InputGroup size="sm">
+                          <InputLeftAddon
+                            children="Sets"
+                            maxW="55"
+                            minW="55"
+                            marginRight={"10px"}
+                          />
+                          <MyNumberInput
+                            min={0}
+                            defaultValue={0}
+                            placeholder="Sets"
+                            value={sets}
+                            onChange={(valueString) =>
+                              editExercice(i, "sets", Number(valueString))
+                            }
+                            size="sm"
+                            variant="flushed"
+                          />
+                        </InputGroup>
+                        <InputGroup size="sm">
+                          <InputLeftAddon
+                            children="Reps"
+                            maxW="55"
+                            minW="55"
+                            marginRight={"10px"}
+                          />
+                          <MyNumberInput
+                            min={0}
+                            defaultValue={0}
+                            placeholder="Reps"
+                            value={reps}
+                            onChange={(valueString) =>
+                              editExercice(i, "reps", Number(valueString))
+                            }
+                            size="sm"
+                            variant="flushed"
+                          />
+                        </InputGroup>
+                        <InputGroup size="sm">
+                          <InputLeftAddon
+                            children="KG"
+                            maxW="55"
+                            minW="55"
+                            marginRight={"10px"}
+                          />
+                          <MyNumberInput
+                            min={0}
+                            defaultValue={0}
+                            placeholder="Weight (KG)"
+                            value={weight}
+                            onChange={(valueString) =>
+                              editExercice(i, "reps", Number(valueString))
+                            }
+                            size="sm"
+                            variant="flushed"
+                          />
+                        </InputGroup>
+                      </>
+                    )}
                   </CardBody>
                 </Stack>
               </Card>
-              {i === routine.length - 1 && (
+              {i === routine.length - 1 && !isReadOnly && (
                 <IconButton
                   variant="outline"
                   colorScheme="teal"
@@ -115,6 +201,19 @@ const RoutineBreakdown = () => {
         </Container>
       </Center>
       <ImageSelector />
+      <IconButton
+        size="lg"
+        aria-label="Add routine"
+        icon={isReadOnly ? <EditIcon /> : <CheckIcon />}
+        colorScheme="teal"
+        style={{
+          position: "fixed",
+          right: 35,
+          bottom: 35,
+          borderRadius: "50%",
+        }}
+        onClick={() => setIsReadOnly(!isReadOnly)}
+      />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { Badge, Box, Image } from "@chakra-ui/react";
 import { RoutineList } from "../interfaces/RoutineList";
+import { useNavigate } from "react-router-dom";
 
 const RoutineCard = ({
   imageUrl,
@@ -9,6 +10,7 @@ const RoutineCard = ({
   category,
   id,
 }: RoutineList) => {
+  const navigate = useNavigate();
   return (
     <Box
       maxW="sm"
@@ -17,6 +19,10 @@ const RoutineCard = ({
       borderRadius="lg"
       overflow="hidden"
       marginBottom="2"
+      cursor="pointer"
+      onClick={() => {
+        navigate(`/routine/${id}`);
+      }}
     >
       <Image src={imageUrl} />
 
