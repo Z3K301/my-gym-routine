@@ -16,7 +16,7 @@ import {
 import { useEffect, useRef } from "react";
 import { useNewRoutineListStore } from "../store/newRoutineListStore";
 import { RoutineList } from "../interfaces/RoutineList";
-import MyNumberInput from "./forms/MyNumberInput";
+import MyNumberInput from "./forms/numberInput/MyNumberInput";
 import SearchInput from "./forms/SearchInput";
 import { useSearchStore } from "../store/searchStore";
 import ImageSelector from "./ImageSelector";
@@ -87,7 +87,6 @@ const NewRoutitne = ({
 
             <Box>
               <FormLabel htmlFor="category">Select category</FormLabel>
-              {/* TODO cambiar a otro muliselect */}
               <MultiSelect
                 label="Category"
                 options={["Leg", "Chest"]}

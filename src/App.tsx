@@ -12,13 +12,15 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
-import RoutineBreakdown from "./components/RoutineBreakdown";
+import RoutineBreakdown from "./components/routineRepeater/RoutineBreakdown";
 import ClickCounter from "./components/ClickCounter";
+import NavigationButton from "./components/NavigationButton";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Router>
       <NavBar />
+      <NavigationButton />
       <Box textAlign="center" fontSize="xl">
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>

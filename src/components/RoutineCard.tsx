@@ -14,7 +14,6 @@ const RoutineCard = ({
   return (
     <Box
       maxW="sm"
-      minW="sm"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

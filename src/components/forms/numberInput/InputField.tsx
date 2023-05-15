@@ -5,23 +5,18 @@ import {
   NumberInputField,
   NumberInputStepper,
 } from "@chakra-ui/react";
-interface MyNumberInputProps {
-  min: number;
-  defaultValue: number;
-  value: number;
-  placeholder?: string;
-  onChange: (value: number) => void;
-  variant?: string;
-  size?: "sm" | "md" | "lg";
-}
-const MyNumberInput = ({
-  min,
+import { MyNumberInputProps } from "../../../interfaces/NumberInput";
+
+const InputField = ({
   defaultValue,
+  min,
   value,
-  onChange,
   placeholder,
   variant,
   size,
+  isReadOnly,
+  onChange,
+  marginLeft,
 }: MyNumberInputProps) => {
   return (
     <NumberInput
@@ -32,6 +27,8 @@ const MyNumberInput = ({
       placeholder={placeholder ?? ""}
       variant={variant ?? "outline"}
       size={size ?? "md"}
+      isReadOnly={isReadOnly ?? false}
+      marginLeft={marginLeft ?? "0"}
     >
       <NumberInputField />
       <NumberInputStepper>
@@ -42,4 +39,4 @@ const MyNumberInput = ({
   );
 };
 
-export default MyNumberInput;
+export default InputField;
