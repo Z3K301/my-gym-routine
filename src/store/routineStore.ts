@@ -9,6 +9,8 @@ interface RoutineStore extends Routine {
     property: string,
     value: string | number
   ) => void;
+  editRoutine: (property: string, value: string | number | string[]) => void;
+  deleteExercice: (position: number) => void;
 }
 const defaultExercice: Exercice = {
   id: 0,
@@ -59,6 +61,12 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
         exerciceList: [...exerciceList],
       };
     });
+  },
+  editRoutine(property, value) {
+    set((state) => ({
+      ...state,
+      [property]: value,
+    }));
   },
   deleteExercice: (position: number) => {
     set(({ exerciceList }) => {

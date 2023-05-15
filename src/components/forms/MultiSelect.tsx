@@ -1,4 +1,5 @@
 import {
+  Button,
   Menu,
   MenuButton,
   MenuButtonProps,
@@ -12,56 +13,44 @@ export type MultiSelectMenuProps = {
   onChange: (selectedValues: string[]) => void;
   value: string[];
   buttonProps?: MenuButtonProps;
+  size?: string;
 };
 const MultiSelect = ({
   label,
   options,
   onChange,
   value,
-  buttonProps,
+  size,
 }: MultiSelectMenuProps) => {
   return (
-    <Menu closeOnSelect={false}>
-      <>
-        <MenuButton
-          type="button"
-          backgroundColor={value.length ? "teal.200" : "white"}
-          color={value.length ? "teal.500" : "gray.600"}
-          borderColor={value.length ? "teal.200" : "gray.300"}
-          borderWidth={1}
-          p={2}
-          px={4}
-          borderRadius="25px"
-          _focus={{
-            outline: "none",
-          }}
-          {...buttonProps}
-        >
-          {`${label}${value.length > 0 ? ` (${value.length})` : ""}`}
-        </MenuButton>
+    <Menu closeOnSelect={false} size={size ?? "md"}>
+      <MenuButton
+        size={size ?? "md"}
+        as={Button}
+        backgroundColor={value.length ? "teal.200" : "white"}
+        color={value.length ? "teal.500" : "gray.600"}
+        borderColor={value.length ? "teal.200" : "gray.300"}
+      >
+        {`${label}${value.length > 0 ? ` (${value.length})` : ""}`}
+      </MenuButton>
 
-        <MenuList>
-          <MenuOptionGroup
-            title={undefined}
-            defaultValue={value}
-            type="checkbox"
-            onChange={(values: string[] | string) => {
-              onChange(values as string[]);
-            }}
-          >
-            {options.map((option) => {
-              return (
-                <MenuItemOption
-                  key={`multiselect-menu-${option}`}
-                  value={option}
-                >
-                  {option}
-                </MenuItemOption>
-              );
-            })}
-          </MenuOptionGroup>
-        </MenuList>
-      </>
+      <MenuList>
+        <MenuOptionGroup
+          value={value}
+          type="checkbox"
+          onChange={(values: string[] | string) => {
+            onChange(values as string[]);
+          }}
+        >
+          {options.map((option) => {
+            return (
+              <MenuItemOption key={`multiselect-menu-${option}`} value={option}>
+                {option}
+              </MenuItemOption>
+            );
+          })}
+        </MenuOptionGroup>
+      </MenuList>
     </Menu>
   );
 };

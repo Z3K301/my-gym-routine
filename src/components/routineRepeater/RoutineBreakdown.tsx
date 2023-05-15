@@ -3,6 +3,7 @@ import {
   CardBody,
   Center,
   Container,
+  Flex,
   IconButton,
   Image,
   Input,
@@ -16,11 +17,20 @@ import { AddIcon, CheckIcon, EditIcon } from "@chakra-ui/icons";
 import SearchInput from "../forms/SearchInput";
 import ImageSelector from "../ImageSelector";
 import { useSearchStore } from "../../store/searchStore";
+import MultiSelect from "../forms/MultiSelect";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
-  const { exerciceList, title, fetchRoutine, addExercice, editExercice } =
-    useRoutineStore((state) => state);
+  const {
+    exerciceList,
+    title,
+    time,
+    category,
+    fetchRoutine,
+    addExercice,
+    editExercice,
+    editRoutine,
+  } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -145,14 +155,38 @@ const RoutineBreakdown = () => {
               </Fragment>
             )
           )}
+
           <Card
-            direction={{ base: "column", sm: "row" }}
+            // direction={{ base: "column", sm: "column" }}
+            marginTop={"20px"}
             overflow="hidden"
             variant="outline"
+            width={ref.current?.offsetWidth}
           >
-            <Stack>
-              <CardBody></CardBody>
-            </Stack>
+            <CardBody>
+              <Flex>
+                <MultiSelect
+                  label="Category"
+                  options={["Leg", "Chest"]}
+                  onChange={(value) => editRoutine("category", value)}
+                  value={category}
+                  size="sm"
+                />
+                <MyNumberInput
+                  labelName="Mnt"
+                  min={0}
+                  defaultValue={0}
+                  placeholder="Duration"
+                  value={time}
+                  onChange={(valueString) =>
+                    editRoutine("time", Number(valueString))
+                  }
+                  size="sm"
+                  variant="flushed"
+                  isReadOnly={isReadOnly}
+                />
+              </Flex>
+            </CardBody>
           </Card>
         </Container>
       </Center>

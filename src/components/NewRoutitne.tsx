@@ -92,6 +92,7 @@ const NewRoutitne = ({
                 options={["Leg", "Chest"]}
                 onChange={(value) => setProperty("category", value)}
                 value={form.category}
+                size="sm"
               />
             </Box>
 
