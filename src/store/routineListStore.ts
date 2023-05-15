@@ -19,7 +19,7 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: "2",
+          time: 2,
           title: "Leg Routine to build muscle",
           category: ["Chest", "Triceps", "Shoulders"],
           reviewCount: 34,
@@ -29,7 +29,7 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: "2",
+          time: 2,
           title: "Leg Routine to build muscle",
           category: ["Leg"],
           reviewCount: 34,
@@ -39,7 +39,7 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
         {
           imageUrl: "https://bit.ly/2Z4KKcF",
           exercices: 3,
-          time: "2",
+          time: 2,
           title: "Leg Routine to build muscle",
           category: ["Leg"],
           reviewCount: 34,

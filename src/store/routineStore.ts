@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Exercice } from "../interfaces/Exercice";
-interface RoutineStore {
-  routine: Exercice[];
+import { Routine } from "../interfaces/Routine";
+interface RoutineStore extends Routine {
   fetchRoutine: (id: number) => Promise<void>;
   addExercice: () => void;
   editExercice: (
@@ -20,10 +20,16 @@ const defaultExercice: Exercice = {
   weight: 0,
 };
 export const useRoutineStore = create<RoutineStore>((set) => ({
-  routine: [],
+  id: 0,
+  exerciceList: [],
+  title: "",
+  time: 0,
+  category: [],
+  imageUrl: "",
   fetchRoutine: async (id) => {
     set(() => ({
-      routine: [
+      title: "Leg Day",
+      exerciceList: [
         {
           id: 1,
           name: "squad",
@@ -38,8 +44,8 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
     }));
   },
   addExercice: () => {
-    set(({ routine }) => ({
-      routine: [...routine, { ...defaultExercice }],
+    set(({ exerciceList }) => ({
+      exerciceList: [...exerciceList, { ...defaultExercice }],
     }));
   },
   editExercice: (
@@ -47,18 +53,18 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
     property: string,
     value: string | number
   ) => {
-    set(({ routine }) => {
-      routine[position][property as keyof Exercice] = value as never;
+    set(({ exerciceList }) => {
+      exerciceList[position][property as keyof Exercice] = value as never;
       return {
-        routine: [...routine],
+        exerciceList: [...exerciceList],
       };
     });
   },
   deleteExercice: (position: number) => {
-    set(({ routine }) => {
-      delete routine[position];
+    set(({ exerciceList }) => {
+      delete exerciceList[position];
       return {
-        routine: [...routine],
+        exerciceList: [...exerciceList],
       };
     });
   },

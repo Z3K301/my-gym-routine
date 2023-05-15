@@ -31,10 +31,12 @@ const InputField = ({
       marginLeft={marginLeft ?? "0"}
     >
       <NumberInputField />
-      <NumberInputStepper>
-        <NumberIncrementStepper />
-        <NumberDecrementStepper />
-      </NumberInputStepper>
+      {!isReadOnly && (
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      )}
     </NumberInput>
   );
 };

@@ -26,7 +26,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <h1>Home Screen</h1>
+      <h1>My Workouts</h1>
       <Center>
         <Container maxW="container.sm" centerContent>
           {routineList.map((routine) => (

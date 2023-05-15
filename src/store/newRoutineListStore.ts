@@ -9,7 +9,7 @@ interface RoutineListStore {
 const initialState: RoutineList = {
   imageUrl: "",
   exercices: 0,
-  time: "0:00",
+  time: 0,
   title: "",
   category: [],
   reviewCount: 0,

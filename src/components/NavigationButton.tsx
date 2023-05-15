@@ -5,9 +5,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 const NavigationButton = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const unloggedRoutes = ["/landing", "/login", "/signup", "/home"];
   return (
     <>
-      {location.pathname !== "/home" && (
+      {/* TODO cambiar a excluir home y rutas unlogged */}
+      {!unloggedRoutes.includes(location.pathname) && (
         <IconButton
           size="lg"
           aria-label="Add routine"
@@ -18,6 +20,7 @@ const NavigationButton = () => {
             left: 35,
             top: 80,
             borderRadius: "50%",
+            zIndex: 9999,
           }}
           onClick={() => navigate(-1)}
         />

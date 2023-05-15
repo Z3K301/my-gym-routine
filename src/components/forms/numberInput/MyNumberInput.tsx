@@ -17,7 +17,7 @@ const MyNumberInput = ({
     <>
       {labelName ? (
         <>
-          <InputGroup size={size ?? "md"}>
+          <InputGroup size={size ?? "md"} width={"100%"}>
             <InputLeftAddon children={labelName} maxW="55" minW="55" />
             <InputField
               defaultValue={defaultValue}

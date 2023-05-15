@@ -28,7 +28,6 @@ export const App = () => (
             <Route path="/" element={<Navigate to="/home" />} />
             {/* Unlogged User Routes */}
             <Route path="/" element={<UnloggedUser />}>
-              {/* TODO change / to landing page */}
               <Route path="/landing" element={<ClickCounter />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Register />} />

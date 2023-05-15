@@ -96,24 +96,12 @@ const NewRoutitne = ({
             </Box>
 
             <Box>
-              <FormLabel htmlFor="exercices">Exercices</FormLabel>
+              <FormLabel htmlFor="time">Duration</FormLabel>
               <MyNumberInput
-                value={form.exercices}
-                onChange={(a) => setProperty("exercices", a)}
+                value={form.time}
+                onChange={(a) => setProperty("time", a)}
                 min={0}
                 defaultValue={0}
-              />
-            </Box>
-
-            <Box>
-              <FormLabel htmlFor="time">Duration</FormLabel>
-              <Input
-                type="time"
-                id="time"
-                value={form.time}
-                onChange={({ target }) => {
-                  setProperty("time", target.value);
-                }}
               />
             </Box>
           </Stack>
