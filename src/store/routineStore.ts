@@ -43,6 +43,7 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
           weight: 100,
         },
       ],
+      category: ["Leg"],
     }));
   },
   addExercice: () => {
@@ -68,11 +69,13 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
       [property]: value,
     }));
   },
+
   deleteExercice: (position: number) => {
-    set(({ exerciceList }) => {
-      delete exerciceList[position];
+    set(({ exerciceList, ...data }) => {
+      exerciceList.splice(position, 1);
       return {
-        exerciceList: [...exerciceList],
+        ...data,
+        exerciceList,
       };
     });
   },

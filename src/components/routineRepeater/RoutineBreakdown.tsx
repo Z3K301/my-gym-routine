@@ -1,4 +1,5 @@
 import {
+  Badge,
   Card,
   CardBody,
   Center,
@@ -13,7 +14,7 @@ import { useParams } from "react-router-dom";
 import { useRoutineStore } from "../../store/routineStore";
 import { Fragment, useEffect, useRef, useState } from "react";
 import MyNumberInput from "../forms/numberInput/MyNumberInput";
-import { AddIcon, CheckIcon, EditIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import SearchInput from "../forms/SearchInput";
 import ImageSelector from "../ImageSelector";
 import { useSearchStore } from "../../store/searchStore";
@@ -30,6 +31,7 @@ const RoutineBreakdown = () => {
     addExercice,
     editExercice,
     editRoutine,
+    deleteExercice,
   } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +52,24 @@ const RoutineBreakdown = () => {
   //TODO separar estructura de repeater del card
   return (
     <>
-      <h1>{title}</h1>
+      {isReadOnly ? (
+        <h1>{title}</h1>
+      ) : (
+        <Center>
+          <Input
+            id={`title`}
+            placeholder="Please enter a Workout tittle"
+            value={title}
+            onChange={({ target }) => editRoutine("title", target.value)}
+            fontWeight={"bold"}
+            size="lg"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+            textAlign={"center"}
+            width="sm"
+          />
+        </Center>
+      )}
       <Center>
         <Container maxW="container.sm" centerContent>
           {exerciceList.map(
@@ -67,8 +86,7 @@ const RoutineBreakdown = () => {
                     maxW={{ base: "100%", sm: "200px" }}
                     src={image}
                   />
-
-                  <Stack>
+                  <Flex>
                     <CardBody>
                       {image.length === 0 && (
                         // TODO change component for multiple search
@@ -140,31 +158,49 @@ const RoutineBreakdown = () => {
                         isReadOnly={isReadOnly}
                       />
                     </CardBody>
-                  </Stack>
+                    {!isReadOnly && (
+                      <IconButton
+                        icon={<DeleteIcon />}
+                        variant="outline"
+                        colorScheme="red"
+                        aria-label="delete-exercice"
+                        size={"sm"}
+                        margin={"5px"}
+                        onClick={() => deleteExercice(i)}
+                      />
+                    )}
+                  </Flex>
                 </Card>
-                {i === exerciceList.length - 1 && !isReadOnly && (
-                  <IconButton
-                    variant="outline"
-                    colorScheme="teal"
-                    aria-label="Send email"
-                    icon={<AddIcon />}
-                    width={ref.current?.offsetWidth}
-                    onClick={addExercice}
-                  />
-                )}
               </Fragment>
             )
           )}
+          {!isReadOnly && (
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="Add exercice"
+              icon={<AddIcon />}
+              width={ref.current?.offsetWidth}
+              onClick={addExercice}
+            />
+          )}
 
-          <Card
-            // direction={{ base: "column", sm: "column" }}
-            marginTop={"20px"}
-            overflow="hidden"
-            variant="outline"
-            width={ref.current?.offsetWidth}
-          >
-            <CardBody>
-              <Flex>
+          <Flex marginTop={"10px"}>
+            <div style={{ marginLeft: "10px" }}>
+              {isReadOnly ? (
+                <Stack direction="row" margin={"10px"}>
+                  {category.map((cat, i) => (
+                    <Badge
+                      borderRadius="full"
+                      px="2"
+                      colorScheme="teal"
+                      key={`cat-${i}`}
+                    >
+                      {cat}
+                    </Badge>
+                  ))}
+                </Stack>
+              ) : (
                 <MultiSelect
                   label="Category"
                   options={["Leg", "Chest"]}
@@ -172,25 +208,27 @@ const RoutineBreakdown = () => {
                   value={category}
                   size="sm"
                 />
-                <MyNumberInput
-                  labelName="Mnt"
-                  min={0}
-                  defaultValue={0}
-                  placeholder="Duration"
-                  value={time}
-                  onChange={(valueString) =>
-                    editRoutine("time", Number(valueString))
-                  }
-                  size="sm"
-                  variant="flushed"
-                  isReadOnly={isReadOnly}
-                />
-              </Flex>
-            </CardBody>
-          </Card>
+              )}
+            </div>
+
+            <MyNumberInput
+              labelName="Mnt"
+              min={0}
+              defaultValue={0}
+              placeholder="Duration"
+              value={time}
+              onChange={(valueString) =>
+                editRoutine("time", Number(valueString))
+              }
+              size="sm"
+              variant="flushed"
+              isReadOnly={isReadOnly}
+            />
+          </Flex>
         </Container>
       </Center>
       <ImageSelector />
+
       <IconButton
         size="lg"
         aria-label="Add exerciceList"
