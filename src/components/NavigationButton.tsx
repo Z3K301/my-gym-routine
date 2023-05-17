@@ -6,6 +6,7 @@ const NavigationButton = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const unloggedRoutes = ["/landing", "/login", "/signup", "/home"];
+  //TODO arreglar bug con responsive
   return (
     <>
       {/* TODO cambiar a excluir home y rutas unlogged */}
