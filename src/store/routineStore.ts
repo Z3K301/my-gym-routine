@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { Exercice } from "../interfaces/Exercice";
 import { Routine } from "../interfaces/Routine";
 interface RoutineStore extends Routine {
+  isStarted: boolean;
   fetchRoutine: (id: number) => Promise<void>;
   addExercice: () => void;
   editExercice: (
@@ -11,6 +12,7 @@ interface RoutineStore extends Routine {
   ) => void;
   editRoutine: (property: string, value: string | number | string[]) => void;
   deleteExercice: (position: number) => void;
+  startRoutine: () => void;
 }
 const defaultExercice: Exercice = {
   id: 0,
@@ -28,6 +30,7 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
   time: 0,
   category: [],
   imageUrl: "",
+  isStarted: false,
   fetchRoutine: async (id) => {
     set(() => ({
       title: "Leg Day",
@@ -78,5 +81,8 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
         exerciceList,
       };
     });
+  },
+  startRoutine: () => {
+    set(({ isStarted, ...data }) => ({ ...data, isStarted: !isStarted }));
   },
 }));

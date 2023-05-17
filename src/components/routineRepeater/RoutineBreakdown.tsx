@@ -17,7 +17,9 @@ import ImageSelector from "../ImageSelector";
 import { useSearchStore } from "../../store/searchStore";
 import MultiSelect from "../forms/MultiSelect";
 import ExerciceCard from "./ExerciceCard";
+import StartRoutine from "./StartRoutine";
 
+//TODO implement start routine
 const RoutineBreakdown = () => {
   const { id } = useParams();
   const {
@@ -29,12 +31,13 @@ const RoutineBreakdown = () => {
     addExercice,
     editRoutine,
     editExercice,
+    isStarted,
   } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
   const [searchIndex, setSearchIndex] = useState(0);
 
   const ref = useRef<HTMLDivElement>(null);
-  //TODO implement start routine
+
   const [isReadOnly, setIsReadOnly] = useState(true);
   useEffect(() => {
     //TODO handle errors
@@ -51,6 +54,7 @@ const RoutineBreakdown = () => {
   //TODO repeater generico
   return (
     <>
+      <StartRoutine />
       {isReadOnly ? (
         <h1>{title}</h1>
       ) : (
@@ -69,6 +73,7 @@ const RoutineBreakdown = () => {
           />
         </Center>
       )}
+
       <Center>
         <Container maxW="container.sm" centerContent>
           {exerciceList.map((data, i) => (
@@ -79,6 +84,7 @@ const RoutineBreakdown = () => {
               isReadOnly={isReadOnly}
               onSearch={setSearchIndex}
               refe={i === exerciceList.length - 1 ? ref : null}
+              isStarted={isStarted}
             />
           ))}
 
@@ -136,22 +142,22 @@ const RoutineBreakdown = () => {
         </Container>
       </Center>
       <ImageSelector />
-
-      <IconButton
-        size="lg"
-        aria-label="Add exerciceList"
-        icon={isReadOnly ? <EditIcon /> : <CheckIcon />}
-        colorScheme="teal"
-        style={{
-          position: "fixed",
-          right: 35,
-          bottom: 35,
-          borderRadius: "50%",
-        }}
-        onClick={() => setIsReadOnly(!isReadOnly)}
-      />
+      {!isStarted && (
+        <IconButton
+          size="lg"
+          aria-label="edit exerciceList"
+          icon={isReadOnly ? <EditIcon /> : <CheckIcon />}
+          colorScheme="teal"
+          style={{
+            position: "fixed",
+            right: 35,
+            bottom: 35,
+            borderRadius: "50%",
+          }}
+          onClick={() => setIsReadOnly(!isReadOnly)}
+        />
+      )}
     </>
   );
 };
-
 export default RoutineBreakdown;

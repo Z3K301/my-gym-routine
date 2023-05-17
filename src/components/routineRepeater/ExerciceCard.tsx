@@ -9,7 +9,7 @@ import {
 
 import SearchInput from "../forms/SearchInput";
 import MyNumberInput from "../forms/numberInput/MyNumberInput";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ArrowForwardIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Exercice } from "../../interfaces/Exercice";
 import { useRoutineStore } from "../../store/routineStore";
 
@@ -19,6 +19,7 @@ interface exerciceProps {
   isReadOnly: boolean;
   onSearch: (index: number) => void;
   refe?: React.RefObject<HTMLDivElement> | null;
+  isStarted: boolean;
 }
 
 const ExerciceCard = ({
@@ -27,17 +28,21 @@ const ExerciceCard = ({
   isReadOnly,
   onSearch,
   refe,
+  isStarted,
 }: exerciceProps) => {
   const { name, image, muscle, sets, reps, weight } = exercice;
   const { editExercice, deleteExercice } = useRoutineStore((state) => state);
-  //TODO asssignar bien imagen
-
+  const handleNext = () => {
+    editExercice(i, "sets", sets - 1);
+    //TODO mandar a la ultima posicion
+  };
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
       overflow="hidden"
       variant="outline"
       ref={refe}
+      backgroundColor={sets === 0 ? "grey" : undefined}
     >
       <Image
         objectFit="cover"
@@ -113,7 +118,32 @@ const ExerciceCard = ({
             variant="flushed"
             isReadOnly={isReadOnly}
           />
+          {isStarted && (
+            <>
+              <IconButton
+                icon={<ArrowBackIcon />}
+                variant="outline"
+                colorScheme="teal"
+                aria-label="Step-back"
+                size={"sm"}
+                marginTop={"5px"}
+                marginRight={"5px"}
+                onClick={() => editExercice(i, "sets", sets + 1)} //TODO Revisar
+              />
+              <IconButton
+                icon={<ArrowForwardIcon />}
+                variant="outline"
+                colorScheme="teal"
+                aria-label="Step-forward"
+                size={"sm"}
+                marginTop={"5px"}
+                onClick={handleNext}
+                isDisabled={sets === 0}
+              />
+            </>
+          )}
         </CardBody>
+        {/* Replantear si ocultar no */}
         {!isReadOnly && (
           <IconButton
             icon={<DeleteIcon />}
