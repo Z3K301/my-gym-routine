@@ -6,6 +6,7 @@ interface RoutineListStore {
   fetchRoutineList: () => Promise<void>;
   addRoutineElement: (routineElement: RoutineList) => void;
   clearList: () => void;
+  editRoutine: (routineElement: RoutineList, position: number) => void;
 }
 
 const initialState: RoutineList[] = [];
@@ -56,5 +57,11 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
   },
   clearList: () => {
     set(() => ({ routineList: initialState }));
+  },
+  editRoutine(routineElement, position) {
+    set(({ routineList, ...state }) => {
+      routineList[position] = routineElement;
+      return { ...state, routineList };
+    });
   },
 }));

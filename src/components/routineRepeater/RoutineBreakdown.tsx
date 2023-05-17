@@ -19,7 +19,6 @@ import MultiSelect from "../forms/MultiSelect";
 import ExerciceCard from "./ExerciceCard";
 import StartRoutine from "./StartRoutine";
 
-//TODO implement start routine
 const RoutineBreakdown = () => {
   const { id } = useParams();
   const {
@@ -54,9 +53,11 @@ const RoutineBreakdown = () => {
   //TODO repeater generico
   return (
     <>
-      <StartRoutine />
       {isReadOnly ? (
-        <h1>{title}</h1>
+        <>
+          <StartRoutine />
+          <h1>{title}</h1>
+        </>
       ) : (
         <Center>
           <Input

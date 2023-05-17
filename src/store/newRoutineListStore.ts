@@ -5,6 +5,7 @@ interface RoutineListStore {
   form: RoutineList;
   setProperty: (property: string, value: any) => void;
   clearForm: () => void;
+  setEditData: (editData: RoutineList) => void;
 }
 const initialState: RoutineList = {
   imageUrl: "",
@@ -23,5 +24,8 @@ export const useNewRoutineListStore = create<RoutineListStore>((set) => ({
   },
   clearForm: () => {
     set(() => ({ form: initialState }));
+  },
+  setEditData(editData) {
+    set((state) => ({ ...state, form: { ...editData } }));
   },
 }));

@@ -34,7 +34,6 @@ const ExerciceCard = ({
   const { editExercice, deleteExercice } = useRoutineStore((state) => state);
   const handleNext = () => {
     editExercice(i, "sets", sets - 1);
-    //TODO mandar a la ultima posicion
   };
   return (
     <Card
@@ -42,7 +41,7 @@ const ExerciceCard = ({
       overflow="hidden"
       variant="outline"
       ref={refe}
-      backgroundColor={sets === 0 ? "grey" : undefined}
+      backgroundColor={sets === 0 && isStarted ? "grey" : undefined}
     >
       <Image
         objectFit="cover"

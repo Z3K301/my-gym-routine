@@ -9,19 +9,21 @@ import { RoutineList } from "../interfaces/RoutineList";
 import { useNewRoutineListStore } from "../store/newRoutineListStore";
 
 const HomeScreen = () => {
-  const { routineList, fetchRoutineList, addRoutineElement } =
+  const { routineList, fetchRoutineList, addRoutineElement, editRoutine } =
     useRoutineListStore((state) => state);
   const clearForm = useNewRoutineListStore((state) => state.clearForm);
+
   useEffect(() => {
     fetchRoutineList();
   }, []);
 
   const handleSubmit = (data: RoutineList) => {
-    addRoutineElement(data);
+    editPos !== null ? editRoutine(data, editPos) : addRoutineElement(data);
     setIsOpened(false);
     clearForm();
   };
 
+  const [editPos, setEditPos] = useState<number | null>(null);
   const [isOpened, setIsOpened] = useState(false);
 
   return (
@@ -29,8 +31,15 @@ const HomeScreen = () => {
       <h1>My Workouts</h1>
       <Center>
         <Container maxW="container.sm" centerContent>
-          {routineList.map((routine) => (
-            <RoutineCard key={routine.id} {...routine} />
+          {routineList.map((routine, i) => (
+            <RoutineCard
+              key={routine.id}
+              {...routine}
+              setEdit={() => {
+                setEditPos(i);
+                setIsOpened(!isOpened);
+              }}
+            />
           ))}
         </Container>
       </Center>
@@ -46,7 +55,10 @@ const HomeScreen = () => {
           bottom: 35,
           borderRadius: "50%",
         }}
-        onClick={() => setIsOpened(true)}
+        onClick={() => {
+          clearForm();
+          setIsOpened(true);
+        }}
       />
 
       <NewRoutitne
