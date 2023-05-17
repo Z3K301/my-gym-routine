@@ -18,6 +18,7 @@ import { useSearchStore } from "../../store/searchStore";
 import MultiSelect from "../forms/MultiSelect";
 import ExerciceCard from "./ExerciceCard";
 import StartRoutine from "./StartRoutine";
+import NavigationButton from "../NavigationButton";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ const RoutineBreakdown = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [isReadOnly, setIsReadOnly] = useState(true);
+  //TODO implement public
   useEffect(() => {
     //TODO handle errors
     fetchRoutine(Number(id));
@@ -53,6 +55,8 @@ const RoutineBreakdown = () => {
   //TODO repeater generico
   return (
     <>
+      <NavigationButton />
+
       {isReadOnly ? (
         <>
           <StartRoutine />

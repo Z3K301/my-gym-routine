@@ -7,14 +7,16 @@ import NewRoutitne from "./NewRoutitne";
 import { AddIcon } from "@chakra-ui/icons";
 import { RoutineList } from "../interfaces/RoutineList";
 import { useNewRoutineListStore } from "../store/newRoutineListStore";
-
-const HomeScreen = () => {
+interface homeProps {
+  isPublic: boolean;
+}
+const HomeScreen = ({ isPublic }: homeProps) => {
   const { routineList, fetchRoutineList, addRoutineElement, editRoutine } =
     useRoutineListStore((state) => state);
   const clearForm = useNewRoutineListStore((state) => state.clearForm);
 
   useEffect(() => {
-    fetchRoutineList();
+    fetchRoutineList(isPublic);
   }, []);
 
   const handleSubmit = (data: RoutineList) => {
@@ -28,11 +30,12 @@ const HomeScreen = () => {
 
   return (
     <>
-      <h1>My Workouts</h1>
+      <h1>{isPublic ? "Popular Workouts" : "My Workouts"}</h1>
       <Center>
         <Container maxW="container.sm" centerContent>
           {routineList.map((routine, i) => (
             <RoutineCard
+              isPublic={isPublic}
               key={routine.id}
               {...routine}
               setEdit={() => {
@@ -44,22 +47,24 @@ const HomeScreen = () => {
         </Container>
       </Center>
 
-      <IconButton
-        size="lg"
-        aria-label="Add routine"
-        icon={<AddIcon />}
-        colorScheme="teal"
-        style={{
-          position: "fixed",
-          right: 35,
-          bottom: 35,
-          borderRadius: "50%",
-        }}
-        onClick={() => {
-          clearForm();
-          setIsOpened(true);
-        }}
-      />
+      {!isPublic && (
+        <IconButton
+          size="lg"
+          aria-label="Add routine"
+          icon={<AddIcon />}
+          colorScheme="teal"
+          style={{
+            position: "fixed",
+            right: 35,
+            bottom: 35,
+            borderRadius: "50%",
+          }}
+          onClick={() => {
+            clearForm();
+            setIsOpened(true);
+          }}
+        />
+      )}
 
       <NewRoutitne
         isOpen={isOpened}

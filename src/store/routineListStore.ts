@@ -3,7 +3,7 @@ import { RoutineList } from "../interfaces/RoutineList";
 
 interface RoutineListStore {
   routineList: RoutineList[];
-  fetchRoutineList: () => Promise<void>;
+  fetchRoutineList: (isPublic: boolean) => Promise<void>;
   addRoutineElement: (routineElement: RoutineList) => void;
   clearList: () => void;
   editRoutine: (routineElement: RoutineList, position: number) => void;
@@ -13,8 +13,9 @@ const initialState: RoutineList[] = [];
 
 export const useRoutineListStore = create<RoutineListStore>((set) => ({
   routineList: initialState,
-  fetchRoutineList: async () => {
-    //TODO fetch
+  fetchRoutineList: async (isPublic) => {
+    //TODO fetch with  isPublic
+    console.log(isPublic);
     set(() => ({
       routineList: [
         {

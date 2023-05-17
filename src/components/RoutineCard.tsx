@@ -6,6 +6,7 @@ import { useNewRoutineListStore } from "../store/newRoutineListStore";
 
 interface RoutineCardProps extends RoutineList {
   setEdit: () => void;
+  isPublic: boolean;
 }
 const RoutineCard = ({
   imageUrl,
@@ -15,6 +16,7 @@ const RoutineCard = ({
   category,
   id,
   setEdit,
+  isPublic,
 }: RoutineCardProps) => {
   const navigate = useNavigate();
   const handleEdit = () => {
@@ -72,11 +74,13 @@ const RoutineCard = ({
           </Box>
           <Spacer />
 
-          <EditIcon
-            cursor="pointer"
-            onClick={handleEdit}
-            _hover={{ bg: "teal.600" }}
-          />
+          {!isPublic && (
+            <EditIcon
+              cursor="pointer"
+              onClick={handleEdit}
+              _hover={{ bg: "teal.600" }}
+            />
+          )}
         </Flex>
       </Box>
     </Box>

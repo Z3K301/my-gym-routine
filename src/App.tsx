@@ -14,13 +14,11 @@ import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
 import RoutineBreakdown from "./components/routineRepeater/RoutineBreakdown";
 import ClickCounter from "./components/ClickCounter";
-import NavigationButton from "./components/NavigationButton";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Router>
       <NavBar />
-      <NavigationButton />
       <Box textAlign="center" fontSize="xl">
         <Grid minH="90vh" alignContent={"center"}>
           <Routes>
@@ -34,7 +32,8 @@ export const App = () => (
             </Route>
             {/* Private Routes */}
             <Route path="/" element={<PrivateRoute />}>
-              <Route path="/home" element={<HomeScreen />} />
+              <Route path="/home" element={<HomeScreen isPublic={false} />} />
+              <Route path="/popworkout" element={<HomeScreen isPublic />} />
               <Route path="/routine/:id" element={<RoutineBreakdown />} />
             </Route>
           </Routes>
