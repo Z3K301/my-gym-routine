@@ -1,0 +1,133 @@
+import {
+  Card,
+  CardBody,
+  Flex,
+  IconButton,
+  Image,
+  Input,
+} from "@chakra-ui/react";
+
+import SearchInput from "../forms/SearchInput";
+import MyNumberInput from "../forms/numberInput/MyNumberInput";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { Exercice } from "../../interfaces/Exercice";
+import { useRoutineStore } from "../../store/routineStore";
+
+interface exerciceProps {
+  exercice: Exercice;
+  i: number;
+  isReadOnly: boolean;
+  onSearch: (index: number) => void;
+  refe?: React.RefObject<HTMLDivElement> | null;
+}
+
+const ExerciceCard = ({
+  exercice,
+  i,
+  isReadOnly,
+  onSearch,
+  refe,
+}: exerciceProps) => {
+  const { name, image, muscle, sets, reps, weight } = exercice;
+  const { editExercice, deleteExercice } = useRoutineStore((state) => state);
+  //TODO asssignar bien imagen
+
+  return (
+    <Card
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+      ref={refe}
+    >
+      <Image
+        objectFit="cover"
+        maxW={{ base: "100%", sm: "200px" }}
+        src={image}
+      />
+      <Flex>
+        <CardBody>
+          {image.length === 0 && (
+            // TODO change component for multiple search
+            <SearchInput
+              size="sm"
+              customAction={() => {
+                onSearch(i);
+              }}
+            />
+          )}
+          <Input
+            id={`name-${i}`}
+            placeholder="Please enter a exercice name"
+            value={name}
+            onChange={({ target }) => editExercice(i, "name", target.value)}
+            fontWeight={"bold"}
+            size="sm"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+          />
+          <Input
+            id="muscle"
+            placeholder="Please a muscle group"
+            value={muscle}
+            onChange={({ target }) => editExercice(i, "muscle", target.value)}
+            size="sm"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+          />
+          <MyNumberInput
+            labelName="Sets"
+            min={0}
+            defaultValue={0}
+            placeholder="Sets"
+            value={sets}
+            onChange={(valueString) =>
+              editExercice(i, "sets", Number(valueString))
+            }
+            size="sm"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+          />
+          <MyNumberInput
+            labelName="Reps"
+            min={0}
+            defaultValue={0}
+            placeholder="Reps"
+            value={reps}
+            onChange={(valueString) =>
+              editExercice(i, "reps", Number(valueString))
+            }
+            size="sm"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+          />
+          <MyNumberInput
+            labelName="Kg"
+            min={0}
+            defaultValue={0}
+            placeholder="Weight (KG)"
+            value={weight}
+            onChange={(valueString) =>
+              editExercice(i, "reps", Number(valueString))
+            }
+            size="sm"
+            variant="flushed"
+            isReadOnly={isReadOnly}
+          />
+        </CardBody>
+        {!isReadOnly && (
+          <IconButton
+            icon={<DeleteIcon />}
+            variant="outline"
+            colorScheme="red"
+            aria-label="delete-exercice"
+            size={"sm"}
+            margin={"5px"}
+            onClick={() => deleteExercice(i)}
+          />
+        )}
+      </Flex>
+    </Card>
+  );
+};
+
+export default ExerciceCard;

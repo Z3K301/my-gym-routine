@@ -1,24 +1,22 @@
 import {
   Badge,
-  Card,
-  CardBody,
   Center,
   Container,
   Flex,
   IconButton,
-  Image,
   Input,
   Stack,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useRoutineStore } from "../../store/routineStore";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MyNumberInput from "../forms/numberInput/MyNumberInput";
-import { AddIcon, CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import SearchInput from "../forms/SearchInput";
+import { AddIcon, CheckIcon, EditIcon } from "@chakra-ui/icons";
+
 import ImageSelector from "../ImageSelector";
 import { useSearchStore } from "../../store/searchStore";
 import MultiSelect from "../forms/MultiSelect";
+import ExerciceCard from "./ExerciceCard";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
@@ -29,19 +27,19 @@ const RoutineBreakdown = () => {
     category,
     fetchRoutine,
     addExercice,
-    editExercice,
     editRoutine,
-    deleteExercice,
+    editExercice,
   } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
+  const [searchIndex, setSearchIndex] = useState(0);
+
   const ref = useRef<HTMLDivElement>(null);
+  //TODO implement start routine
+  const [isReadOnly, setIsReadOnly] = useState(true);
   useEffect(() => {
     //TODO handle errors
     fetchRoutine(Number(id));
   }, []);
-
-  const [searchIndex, setSearchIndex] = useState(0);
-  const [isReadOnly, setIsReadOnly] = useState(true);
 
   useEffect(() => {
     if (selected.length > 0) {
@@ -49,7 +47,8 @@ const RoutineBreakdown = () => {
       setSelected("");
     }
   }, [selected]);
-  //TODO separar estructura de repeater del card
+
+  //TODO repeater generico
   return (
     <>
       {isReadOnly ? (
@@ -72,108 +71,17 @@ const RoutineBreakdown = () => {
       )}
       <Center>
         <Container maxW="container.sm" centerContent>
-          {exerciceList.map(
-            ({ id, name, image, muscle, sets, reps, weight }, i) => (
-              <Fragment key={`${id}-${i}`}>
-                <Card
-                  direction={{ base: "column", sm: "row" }}
-                  overflow="hidden"
-                  variant="outline"
-                  ref={i === exerciceList.length - 1 ? ref : null}
-                >
-                  <Image
-                    objectFit="cover"
-                    maxW={{ base: "100%", sm: "200px" }}
-                    src={image}
-                  />
-                  <Flex>
-                    <CardBody>
-                      {image.length === 0 && (
-                        // TODO change component for multiple search
-                        <SearchInput
-                          customAction={() => setSearchIndex(i)}
-                          size="sm"
-                        />
-                      )}
-                      <Input
-                        id={`name-${i}`}
-                        placeholder="Please enter a exercice name"
-                        value={name}
-                        onChange={({ target }) =>
-                          editExercice(i, "name", target.value)
-                        }
-                        fontWeight={"bold"}
-                        size="sm"
-                        variant="flushed"
-                        isReadOnly={isReadOnly}
-                      />
-                      <Input
-                        id="muscle"
-                        placeholder="Please a muscle group"
-                        value={muscle}
-                        onChange={({ target }) =>
-                          editExercice(i, "muscle", target.value)
-                        }
-                        size="sm"
-                        variant="flushed"
-                        isReadOnly={isReadOnly}
-                      />
-                      <MyNumberInput
-                        labelName="Sets"
-                        min={0}
-                        defaultValue={0}
-                        placeholder="Sets"
-                        value={sets}
-                        onChange={(valueString) =>
-                          editExercice(i, "sets", Number(valueString))
-                        }
-                        size="sm"
-                        variant="flushed"
-                        isReadOnly={isReadOnly}
-                      />
-                      <MyNumberInput
-                        labelName="Reps"
-                        min={0}
-                        defaultValue={0}
-                        placeholder="Reps"
-                        value={reps}
-                        onChange={(valueString) =>
-                          editExercice(i, "reps", Number(valueString))
-                        }
-                        size="sm"
-                        variant="flushed"
-                        isReadOnly={isReadOnly}
-                      />
-                      <MyNumberInput
-                        labelName="Kg"
-                        min={0}
-                        defaultValue={0}
-                        placeholder="Weight (KG)"
-                        value={weight}
-                        onChange={(valueString) =>
-                          editExercice(i, "reps", Number(valueString))
-                        }
-                        size="sm"
-                        variant="flushed"
-                        isReadOnly={isReadOnly}
-                      />
-                    </CardBody>
-                    {!isReadOnly && (
-                      <IconButton
-                        icon={<DeleteIcon />}
-                        variant="outline"
-                        colorScheme="red"
-                        aria-label="delete-exercice"
-                        size={"sm"}
-                        margin={"5px"}
-                        onClick={() => deleteExercice(i)}
-                      />
-                    )}
-                  </Flex>
-                </Card>
-              </Fragment>
-            )
-          )}
+          {exerciceList.map((data, i) => (
+            <ExerciceCard
+              key={`${data.id}-${i}`}
+              exercice={data}
+              i={i}
+              isReadOnly={isReadOnly}
+              onSearch={setSearchIndex}
+              refe={i === exerciceList.length - 1 ? ref : null}
+            />
+          ))}
+
           {!isReadOnly && (
             <IconButton
               variant="outline"
