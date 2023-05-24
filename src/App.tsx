@@ -14,6 +14,7 @@ import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
 import RoutineBreakdown from "./components/routineRepeater/RoutineBreakdown";
 import ClickCounter from "./components/ClickCounter";
+import MyCalendar from "./components/MyCalendar";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -35,6 +36,7 @@ export const App = () => (
               <Route path="/home" element={<HomeScreen isPublic={false} />} />
               <Route path="/popworkout" element={<HomeScreen isPublic />} />
               <Route path="/routine/:id" element={<RoutineBreakdown />} />
+              <Route path="/calendar" element={<MyCalendar />} />
             </Route>
           </Routes>
         </Grid>

@@ -39,7 +39,7 @@ const RoutineBreakdown = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [isReadOnly, setIsReadOnly] = useState(true);
-  //TODO implement public
+  //TODO implement public in back
   useEffect(() => {
     //TODO handle errors
     fetchRoutine(Number(id));

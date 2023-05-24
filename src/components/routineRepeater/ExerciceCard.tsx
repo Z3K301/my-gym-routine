@@ -12,6 +12,7 @@ import MyNumberInput from "../forms/numberInput/MyNumberInput";
 import { ArrowBackIcon, ArrowForwardIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Exercice } from "../../interfaces/Exercice";
 import { useRoutineStore } from "../../store/routineStore";
+import { useState } from "react";
 
 interface exerciceProps {
   exercice: Exercice;
@@ -32,9 +33,11 @@ const ExerciceCard = ({
 }: exerciceProps) => {
   const { name, image, muscle, sets, reps, weight } = exercice;
   const { editExercice, deleteExercice } = useRoutineStore((state) => state);
+  const [initialSets] = useState(sets);
   const handleNext = () => {
     editExercice(i, "sets", sets - 1);
   };
+
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -50,7 +53,7 @@ const ExerciceCard = ({
       />
       <Flex>
         <CardBody>
-          {image.length === 0 && (
+          {image.length === 0 && !isReadOnly && (
             // TODO change component for multiple search
             <SearchInput
               size="sm"
@@ -127,7 +130,8 @@ const ExerciceCard = ({
                 size={"sm"}
                 marginTop={"5px"}
                 marginRight={"5px"}
-                onClick={() => editExercice(i, "sets", sets + 1)} //TODO Revisar
+                onClick={() => editExercice(i, "sets", sets + 1)}
+                isDisabled={sets === initialSets}
               />
               <IconButton
                 icon={<ArrowForwardIcon />}

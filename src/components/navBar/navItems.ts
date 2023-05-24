@@ -22,7 +22,7 @@ export const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "My Week",
-    href: "/chuck",
+    href: "/calendar",
   },
   {
     label: "Popular Workouts",
