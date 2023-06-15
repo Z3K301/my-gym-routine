@@ -35,7 +35,7 @@ const Landing = () => {
           >
             Make every workout <br />
             <Text as={"span"} color={"teal"}>
-              Being The Best
+              The Best
             </Text>
           </Heading>
           <Text color={"gray.500"}>

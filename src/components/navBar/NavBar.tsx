@@ -20,6 +20,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token") ? true : false;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -57,7 +58,7 @@ export default function NavBar() {
             <Image src="/logo192.png" boxSize="30px" alt="logo" />
           </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav />
+            {isLoggedIn && <DesktopNav />}
           </Flex>
         </Flex>
         <Stack
