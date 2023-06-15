@@ -13,8 +13,8 @@ import Register from "./components/Register";
 import { UnloggedUser } from "./router/UnloggedUser";
 import HomeScreen from "./components/HomeScreen";
 import RoutineBreakdown from "./components/routineRepeater/RoutineBreakdown";
-import ClickCounter from "./components/ClickCounter";
 import MyCalendar from "./components/MyCalendar";
+import Landing from "./components/Landing";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -27,7 +27,7 @@ export const App = () => (
             <Route path="/" element={<Navigate to="/home" />} />
             {/* Unlogged User Routes */}
             <Route path="/" element={<UnloggedUser />}>
-              <Route path="/landing" element={<ClickCounter />} />
+              <Route path="/landing" element={<Landing />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Register />} />
             </Route>
