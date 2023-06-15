@@ -15,7 +15,6 @@ export const useRoutineListStore = create<RoutineListStore>((set) => ({
   routineList: initialState,
   fetchRoutineList: async (isPublic) => {
     //TODO fetch with  isPublic
-    console.log(isPublic);
     set(() => ({
       routineList: [
         {

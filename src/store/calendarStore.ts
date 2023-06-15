@@ -36,7 +36,6 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
     }));
   },
   setFormProperty: (property: string, value: any) => {
-    console.log(property, value);
     set((state) => ({
       form: {
         ...state.form,

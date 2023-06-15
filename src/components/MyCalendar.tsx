@@ -19,7 +19,6 @@ const MyCalendar = () => {
   useEffect(() => {
     fetchEvents();
   }, []);
-  console.log(events);
 
   const onDayClick = (e: any) => {
     //TODO hange any

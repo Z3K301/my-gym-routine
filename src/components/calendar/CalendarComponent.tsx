@@ -14,9 +14,9 @@ const CalendarComponent = ({ events, onDateClick }: CalendarProps) => {
         dateClick={(e) => {
           onDateClick(e);
         }}
-        eventClick={(e) => {
-          console.log(e);
-        }}
+        // eventClick={(e) => {
+        //   console.log(e);
+        // }}
         initialView="dayGridMonth"
         contentHeight="600"
         events={events}
