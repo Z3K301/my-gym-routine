@@ -9,6 +9,7 @@ interface CalendarStore {
   setIsFormOpen: () => void;
   setFormProperty: (property: string, value: any) => void;
   submitForm: () => void;
+  removeEvent: (id: number) => void;
 }
 export const useCalendarStore = create<CalendarStore>((set) => ({
   events: [],
@@ -63,6 +64,11 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
           routineId: state.form.routineId,
         },
       ],
+    }));
+  },
+  removeEvent(id) {
+    set((state) => ({
+      events: state.events.filter((event) => event.routineId !== id),
     }));
   },
 }));

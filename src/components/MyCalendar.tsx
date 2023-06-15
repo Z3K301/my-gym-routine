@@ -14,6 +14,7 @@ const MyCalendar = () => {
     form,
     setFormProperty,
     submitForm,
+    removeEvent,
   } = useCalendarStore((state) => state);
 
   useEffect(() => {
@@ -28,9 +29,13 @@ const MyCalendar = () => {
   };
   return (
     <>
-      <div>My Calendar</div>
+      <div>My Week</div>
       <Container maxW={"container.xl"}>
-        <CalendarComponent events={events} onDateClick={onDayClick} />
+        <CalendarComponent
+          events={events}
+          onDateClick={onDayClick}
+          onEventRemove={removeEvent}
+        />
       </Container>
       <FloatButton icon={<AddIcon />} onClick={setIsFormOpen} />
       <CalendarForm

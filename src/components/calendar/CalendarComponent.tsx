@@ -5,8 +5,13 @@ import { CalendarEvent } from "../../interfaces/CalendarEvent";
 interface CalendarProps {
   events: CalendarEvent[];
   onDateClick: (e: any) => void;
+  onEventRemove: (id: number) => void;
 }
-const CalendarComponent = ({ events, onDateClick }: CalendarProps) => {
+const CalendarComponent = ({
+  events,
+  onDateClick,
+  onEventRemove,
+}: CalendarProps) => {
   return (
     <>
       <FullCalendar
@@ -14,9 +19,11 @@ const CalendarComponent = ({ events, onDateClick }: CalendarProps) => {
         dateClick={(e) => {
           onDateClick(e);
         }}
-        // eventClick={(e) => {
-        //   console.log(e);
-        // }}
+        eventDragStop={({ event }) => {
+          console.log(event.toJSON().extendedProps.routineId);
+          event.remove();
+          onEventRemove(event.toJSON().extendedProps.routineId);
+        }}
         initialView="dayGridMonth"
         contentHeight="600"
         events={events}
