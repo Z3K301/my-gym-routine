@@ -41,6 +41,7 @@ const RoutineBreakdown = () => {
 
   const [isReadOnly, setIsReadOnly] = useState(true);
   //TODO implement public in back
+  //TODO fix bug edit image workout
   useEffect(() => {
     //TODO handle errors
     fetchRoutine(Number(id));

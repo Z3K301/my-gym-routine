@@ -114,7 +114,7 @@ const ExerciceCard = ({
             placeholder="Weight (KG)"
             value={weight}
             onChange={(valueString) =>
-              editExercice(i, "reps", Number(valueString))
+              editExercice(i, "weight", Number(valueString))
             }
             size="sm"
             variant="flushed"

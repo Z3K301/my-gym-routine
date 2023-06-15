@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const NavigationButton = () => {
   const navigate = useNavigate();
-  //TODO arreglar bug con responsive
   return (
     <IconButton
       size="lg"

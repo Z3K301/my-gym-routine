@@ -16,8 +16,9 @@ const StartRoutine = () => {
       colorScheme={isStarted ? "red" : "teal"}
       style={{
         position: "absolute",
-        right: 35,
+        right: 17,
         top: 75,
+        zIndex: 9999,
       }}
       onClick={handleClick}
     >
