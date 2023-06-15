@@ -1,4 +1,4 @@
-import { Center, Container, IconButton } from "@chakra-ui/react";
+import { Center, Container } from "@chakra-ui/react";
 import RoutineCard from "./RoutineCard";
 import { useRoutineListStore } from "../store/routineListStore";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import NewRoutitne from "./NewRoutitne";
 import { AddIcon } from "@chakra-ui/icons";
 import { RoutineList } from "../interfaces/RoutineList";
 import { useNewRoutineListStore } from "../store/newRoutineListStore";
+import FloatButton from "./forms/FloatButton";
 interface homeProps {
   isPublic: boolean;
 }
@@ -48,17 +49,8 @@ const HomeScreen = ({ isPublic }: homeProps) => {
       </Center>
 
       {!isPublic && (
-        <IconButton
-          size="lg"
-          aria-label="Add routine"
+        <FloatButton
           icon={<AddIcon />}
-          colorScheme="teal"
-          style={{
-            position: "fixed",
-            right: 35,
-            bottom: 35,
-            borderRadius: "50%",
-          }}
           onClick={() => {
             clearForm();
             setIsOpened(true);

@@ -1,6 +1,15 @@
 export interface CalendarEvent {
-  event_id: number | string;
   title: string;
-  start: Date;
-  end: Date;
+  borderColor: string;
+  start: string;
+  end: string;
+  backgroundColor: string;
+  className: string;
+  routineId: number;
+}
+
+export interface CalendorForm {
+  start: string;
+  routineId: number;
+  routineName: string;
 }

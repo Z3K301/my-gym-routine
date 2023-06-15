@@ -19,6 +19,7 @@ import MultiSelect from "../forms/MultiSelect";
 import ExerciceCard from "./ExerciceCard";
 import StartRoutine from "./StartRoutine";
 import NavigationButton from "../NavigationButton";
+import FloatButton from "../forms/FloatButton";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
@@ -148,17 +149,8 @@ const RoutineBreakdown = () => {
       </Center>
       <ImageSelector />
       {!isStarted && (
-        <IconButton
-          size="lg"
-          aria-label="edit exerciceList"
+        <FloatButton
           icon={isReadOnly ? <EditIcon /> : <CheckIcon />}
-          colorScheme="teal"
-          style={{
-            position: "fixed",
-            right: 35,
-            bottom: 35,
-            borderRadius: "50%",
-          }}
           onClick={() => setIsReadOnly(!isReadOnly)}
         />
       )}
