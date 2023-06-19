@@ -22,7 +22,7 @@ const MyCalendar = () => {
   }, []);
 
   const onDayClick = (e: any) => {
-    //TODO hange any
+    //TODO change any
     setIsFormOpen();
     setFormProperty("start", e.dateStr);
     setFormProperty("end", e.dateStr);

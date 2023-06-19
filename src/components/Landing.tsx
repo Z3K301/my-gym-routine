@@ -58,7 +58,7 @@ const Landing = () => {
                 bg: "teal.500",
               }}
               as={RouterLink}
-              to="/signup"
+              to="/login"
             >
               Get Started
             </Button>

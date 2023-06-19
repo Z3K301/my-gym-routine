@@ -1,8 +1,14 @@
 import axios from "axios";
 import { apiURL } from "../globals";
-export const handleLogin = async (user: string, password: string) => {
-  const { data } = await axios.post(`${apiURL}users/login`, {
+//TODO Handle error
+export const handleRegister = async (
+  user: string,
+  mail: string,
+  password: string
+) => {
+  const { data } = await axios.post(`${apiURL}users`, {
     user,
+    email: mail,
     password,
   });
   if (data) {

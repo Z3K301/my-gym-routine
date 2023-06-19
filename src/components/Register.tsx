@@ -11,6 +11,7 @@ import { useRegisterStore } from "../store/registerStore";
 import PasswordInput from "./forms/PasswordInput";
 import { checkMail } from "../utils/checkMail";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -31,15 +32,23 @@ const Register = () => {
     password: false,
   });
 
-  const handleRegister = () => {
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    console.log("handleRegister");
     const newErrors = {
       user: user.length === 0,
       mail: !checkMail(mail),
       password: password.length === 0,
     };
     setErrors(newErrors);
+    console.log(newErrors);
     if (!newErrors.user && !newErrors.mail && !newErrors.password) {
-      register();
+      const isRegistered = await register();
+      if (isRegistered) {
+        navigate("/home");
+      }
+      //TODO handle error
     }
   };
   return (

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { handleRegister } from "../utils/auth/register";
 
 interface IRegisterStore {
   user: string;
@@ -9,7 +10,7 @@ interface IRegisterStore {
   setMail: (text: string) => void;
   setPassword: (text: string) => void;
   setShowPassword: () => void;
-  register: () => void;
+  register: () => Promise<boolean>;
 }
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   password: "",
   showPassword: false,
 };
-export const useRegisterStore = create<IRegisterStore>((set) => ({
+export const useRegisterStore = create<IRegisterStore>((set, get) => ({
   ...initialState,
   setUser: (text) => {
     set(() => ({ user: text }));
@@ -33,8 +34,13 @@ export const useRegisterStore = create<IRegisterStore>((set) => ({
     set((state) => ({ showPassword: !state.showPassword }));
   },
   register: async () => {
-    //TODO login call and set logged in true
-    set(() => ({ ...initialState }));
-    //TODO redirect
+    const { user, mail, password } = get();
+    const isRegistered = await handleRegister(user, mail, password);
+    if (isRegistered) {
+      set(() => ({ ...initialState }));
+    } else {
+      //TODO error
+    }
+    return isRegistered;
   },
 }));
