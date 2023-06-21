@@ -21,6 +21,8 @@ import StartRoutine from "./StartRoutine";
 import NavigationButton from "../NavigationButton";
 import FloatButton from "../forms/FloatButton";
 import { useNewRoutineListStore } from "../../store/newRoutineListStore";
+import axios from "axios";
+import { apiURL } from "../../utils/globals";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
@@ -47,7 +49,6 @@ const RoutineBreakdown = () => {
   //TODO implement public in back
   //TODO fix bug edit image workout
   useEffect(() => {
-    //TODO handle errors
     fetchCategoryList();
     fetchRoutine(Number(id));
   }, []);
@@ -58,6 +59,19 @@ const RoutineBreakdown = () => {
       setSelected("");
     }
   }, [selected]);
+
+  const handleSave = () => {
+    if (!isReadOnly) {
+      console.log(exercices, `${apiURL}routines/save/${Number(id)}`);
+      axios.post(`${apiURL}routines/save/${Number(id)}`, {
+        title,
+        time,
+        category,
+        exercices,
+      });
+    }
+    setIsReadOnly(!isReadOnly);
+  };
 
   //TODO repeater generico
   return (
@@ -122,12 +136,11 @@ const RoutineBreakdown = () => {
                       colorScheme="teal"
                       key={`cat-${i}`}
                     >
-                      {/* {cat} */}
+                      {cat.name}
                     </Badge>
                   ))}
                 </Stack>
               ) : (
-                //TODO change to muscle
                 <MultiSelect
                   label="Category"
                   options={categryList}
@@ -156,9 +169,10 @@ const RoutineBreakdown = () => {
       </Center>
       <ImageSelector />
       {!isStarted && (
+        //TODO implement upsert
         <FloatButton
           icon={isReadOnly ? <EditIcon /> : <CheckIcon />}
-          onClick={() => setIsReadOnly(!isReadOnly)}
+          onClick={handleSave}
         />
       )}
     </>

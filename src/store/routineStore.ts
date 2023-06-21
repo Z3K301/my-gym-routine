@@ -21,7 +21,6 @@ interface RoutineStore extends Routine {
   startRoutine: () => void;
 }
 const defaultExercice: Exercice = {
-  id: 0,
   name: "",
   muscle: "",
   sets: 0,
@@ -29,7 +28,7 @@ const defaultExercice: Exercice = {
   image: "",
   weight: 0,
 };
-export const useRoutineStore = create<RoutineStore>((set) => ({
+export const useRoutineStore = create<RoutineStore>((set, get) => ({
   id: 0,
   exercices: [],
   title: "",
@@ -66,6 +65,9 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
   },
 
   deleteExercice: (position: number) => {
+    const { exercices } = get();
+    const { id } = exercices[position];
+    if (id !== 0) axios.delete(`${apiURL}exercices/${id}`);
     set(({ exercices, ...data }) => {
       exercices.splice(position, 1);
       return {

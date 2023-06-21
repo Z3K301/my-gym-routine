@@ -1,5 +1,5 @@
 export interface Exercice {
-  id: number;
+  id?: number;
   name: string;
   image: string;
   muscle: string;
