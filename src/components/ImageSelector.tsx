@@ -27,7 +27,7 @@ const ImageSelector = () => {
         <ModalCloseButton />
         <ModalBody>
           <Wrap spacing="30px" justify="center">
-            {results.map((img, i) => (
+            {results?.map((img, i) => (
               <WrapItem key={`${i}-wrap`}>
                 <Image
                   key={i}

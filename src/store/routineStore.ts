@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { Exercice } from "../interfaces/Exercice";
 import { Routine } from "../interfaces/Routine";
+import { Select } from "../interfaces/Select";
+import axios from "axios";
+import { apiURL } from "../utils/globals";
 interface RoutineStore extends Routine {
   isStarted: boolean;
   fetchRoutine: (id: number) => Promise<void>;
@@ -10,7 +13,10 @@ interface RoutineStore extends Routine {
     property: string,
     value: string | number
   ) => void;
-  editRoutine: (property: string, value: string | number | string[]) => void;
+  editRoutine: (
+    property: string,
+    value: string | number | string[] | Select[]
+  ) => void;
   deleteExercice: (position: number) => void;
   startRoutine: () => void;
 }
@@ -25,33 +31,19 @@ const defaultExercice: Exercice = {
 };
 export const useRoutineStore = create<RoutineStore>((set) => ({
   id: 0,
-  exerciceList: [],
+  exercices: [],
   title: "",
   time: 0,
   category: [],
-  imageUrl: "",
+  image: "",
   isStarted: false,
   fetchRoutine: async (id) => {
-    set(() => ({
-      title: "Leg Day",
-      exerciceList: [
-        {
-          id: 1,
-          name: "squad",
-          image:
-            "https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
-          muscle: "Quads",
-          sets: 3,
-          reps: 8,
-          weight: 100,
-        },
-      ],
-      category: ["Leg"],
-    }));
+    const { data } = await axios.get(`${apiURL}routines/${id}`);
+    set(() => data[0]);
   },
   addExercice: () => {
-    set(({ exerciceList }) => ({
-      exerciceList: [...exerciceList, { ...defaultExercice }],
+    set(({ exercices }) => ({
+      exercices: [...exercices, { ...defaultExercice }],
     }));
   },
   editExercice: (
@@ -59,10 +51,10 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
     property: string,
     value: string | number
   ) => {
-    set(({ exerciceList }) => {
-      exerciceList[position][property as keyof Exercice] = value as never;
+    set(({ exercices }) => {
+      exercices[position][property as keyof Exercice] = value as never;
       return {
-        exerciceList: [...exerciceList],
+        exercices: [...exercices],
       };
     });
   },
@@ -74,11 +66,11 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
   },
 
   deleteExercice: (position: number) => {
-    set(({ exerciceList, ...data }) => {
-      exerciceList.splice(position, 1);
+    set(({ exercices, ...data }) => {
+      exercices.splice(position, 1);
       return {
         ...data,
-        exerciceList,
+        exercices,
       };
     });
   },

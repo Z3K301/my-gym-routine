@@ -53,7 +53,7 @@ const ExerciceCard = ({
       />
       <Flex>
         <CardBody>
-          {image.length === 0 && !isReadOnly && (
+          {image?.length === 0 && !isReadOnly && (
             // TODO change component for multiple search
             <SearchInput
               size="sm"

@@ -66,7 +66,7 @@ const Login = () => {
             setPassword={setPassword}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
-            submit={login}
+            submit={handleLogin}
           />
         </FormControl>
         <Flex>

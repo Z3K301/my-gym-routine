@@ -9,7 +9,7 @@ interface RoutineCardProps extends RoutineList {
   isPublic: boolean;
 }
 const RoutineCard = ({
-  imageUrl,
+  image,
   exercices,
   time,
   title,
@@ -21,7 +21,7 @@ const RoutineCard = ({
   const navigate = useNavigate();
   const handleEdit = () => {
     setEdit();
-    setEditData({ imageUrl, exercices, time, title, category, id });
+    setEditData({ image, exercices, time, title, category, id });
   };
   const setEditData = useNewRoutineListStore((state) => state.setEditData);
   return (
@@ -33,7 +33,7 @@ const RoutineCard = ({
       marginBottom="2"
     >
       <Image
-        src={imageUrl}
+        src={image}
         onClick={() => {
           navigate(`/routine/${id}`);
         }}
@@ -41,14 +41,14 @@ const RoutineCard = ({
       />
       <Box p="6">
         <Box display="flex" alignItems="baseline">
-          {category.map((c) => (
+          {category?.map((c) => (
             <Badge
               borderRadius="full"
               px="2"
               colorScheme="teal"
               key={`${id}-${c}`}
             >
-              {c}
+              {c.name}
             </Badge>
           ))}
           <Box

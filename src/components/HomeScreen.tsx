@@ -12,8 +12,13 @@ interface homeProps {
   isPublic: boolean;
 }
 const HomeScreen = ({ isPublic }: homeProps) => {
-  const { routineList, fetchRoutineList, addRoutineElement, editRoutine } =
-    useRoutineListStore((state) => state);
+  const {
+    routineList,
+    fetchRoutineList,
+    addRoutineElement,
+    editRoutine,
+    deleteRoutine,
+  } = useRoutineListStore((state) => state);
   const clearForm = useNewRoutineListStore((state) => state.clearForm);
 
   useEffect(() => {
@@ -22,6 +27,11 @@ const HomeScreen = ({ isPublic }: homeProps) => {
 
   const handleSubmit = (data: RoutineList) => {
     editPos !== null ? editRoutine(data, editPos) : addRoutineElement(data);
+    setIsOpened(false);
+    clearForm();
+  };
+  const handleDelete = (id: number) => {
+    deleteRoutine(id);
     setIsOpened(false);
     clearForm();
   };
@@ -34,7 +44,7 @@ const HomeScreen = ({ isPublic }: homeProps) => {
       <h1>{isPublic ? "Popular Workouts" : "My Workouts"}</h1>
       <Center>
         <Container maxW="container.sm" centerContent>
-          {routineList.map((routine, i) => (
+          {routineList?.map((routine, i) => (
             <RoutineCard
               isPublic={isPublic}
               key={routine.id}
@@ -62,6 +72,7 @@ const HomeScreen = ({ isPublic }: homeProps) => {
         isOpen={isOpened}
         closeAction={() => setIsOpened(false)}
         submitAction={handleSubmit}
+        deleteAction={handleDelete}
       />
     </>
   );

@@ -1,9 +1,11 @@
+import { Select } from "./Select";
+
 export interface RoutineList {
-  imageUrl: string;
+  image: string;
   exercices?: number;
   time: number;
   title: string;
-  category: string[];
+  category: Select[];
   reviewCount?: number;
   rating?: number;
   id: number;

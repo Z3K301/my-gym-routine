@@ -7,11 +7,12 @@ import {
   MenuList,
   MenuOptionGroup,
 } from "@chakra-ui/react";
+import { Select } from "../../interfaces/Select";
 export type MultiSelectMenuProps = {
   label: string;
-  options: string[];
-  onChange: (selectedValues: string[]) => void;
-  value: string[];
+  options: Select[];
+  onChange: (selectedValues: Select[]) => void;
+  value: Select[];
   buttonProps?: MenuButtonProps;
   size?: string;
 };
@@ -36,16 +37,19 @@ const MultiSelect = ({
 
       <MenuList>
         <MenuOptionGroup
-          value={value}
+          value={value.map((option) => option.id)}
           type="checkbox"
           onChange={(values: string[] | string) => {
-            onChange(values as string[]);
+            onChange(options.filter((o) => values.includes(o.id)));
           }}
         >
           {options.map((option) => {
             return (
-              <MenuItemOption key={`multiselect-menu-${option}`} value={option}>
-                {option}
+              <MenuItemOption
+                key={`multiselect-menu-${option.id}`}
+                value={option.id}
+              >
+                {option.name}
               </MenuItemOption>
             );
           })}

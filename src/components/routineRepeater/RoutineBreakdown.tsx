@@ -20,11 +20,12 @@ import ExerciceCard from "./ExerciceCard";
 import StartRoutine from "./StartRoutine";
 import NavigationButton from "../NavigationButton";
 import FloatButton from "../forms/FloatButton";
+import { useNewRoutineListStore } from "../../store/newRoutineListStore";
 
 const RoutineBreakdown = () => {
   const { id } = useParams();
   const {
-    exerciceList,
+    exercices,
     title,
     time,
     category,
@@ -35,6 +36,9 @@ const RoutineBreakdown = () => {
     isStarted,
   } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
+  const { fetchCategoryList, categryList } = useNewRoutineListStore(
+    (state) => state
+  );
   const [searchIndex, setSearchIndex] = useState(0);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -44,6 +48,7 @@ const RoutineBreakdown = () => {
   //TODO fix bug edit image workout
   useEffect(() => {
     //TODO handle errors
+    fetchCategoryList();
     fetchRoutine(Number(id));
   }, []);
 
@@ -83,14 +88,14 @@ const RoutineBreakdown = () => {
 
       <Center>
         <Container maxW="container.sm" centerContent>
-          {exerciceList.map((data, i) => (
+          {exercices.map((data, i) => (
             <ExerciceCard
               key={`${data.id}-${i}`}
               exercice={data}
               i={i}
               isReadOnly={isReadOnly}
               onSearch={setSearchIndex}
-              refe={i === exerciceList.length - 1 ? ref : null}
+              refe={i === exercices.length - 1 ? ref : null}
               isStarted={isStarted}
             />
           ))}
@@ -117,14 +122,15 @@ const RoutineBreakdown = () => {
                       colorScheme="teal"
                       key={`cat-${i}`}
                     >
-                      {cat}
+                      {/* {cat} */}
                     </Badge>
                   ))}
                 </Stack>
               ) : (
+                //TODO change to muscle
                 <MultiSelect
                   label="Category"
-                  options={["Leg", "Chest"]}
+                  options={categryList}
                   onChange={(value) => editRoutine("category", value)}
                   value={category}
                   size="sm"

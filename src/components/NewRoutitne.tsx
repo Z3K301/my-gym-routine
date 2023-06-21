@@ -25,18 +25,24 @@ interface NewRoutitneProps {
   isOpen: boolean;
   closeAction: () => void;
   submitAction: (data: RoutineList) => void;
+  deleteAction: (id: number) => void;
 }
 const NewRoutitne = ({
   isOpen,
   closeAction,
   submitAction,
+  deleteAction,
 }: NewRoutitneProps) => {
   const firstField = useRef<HTMLInputElement>(null);
-  const { form, setProperty } = useNewRoutineListStore((state) => state);
+  const { form, setProperty, fetchCategoryList, categryList } =
+    useNewRoutineListStore((state) => state);
   const selectedImage = useSearchStore((state) => state.selected);
   useEffect(() => {
+    fetchCategoryList();
+  }, []);
+  useEffect(() => {
     if (selectedImage.length > 0) {
-      setProperty("imageUrl", selectedImage);
+      setProperty("image", selectedImage);
     }
   }, [selectedImage]);
   return (
@@ -67,13 +73,13 @@ const NewRoutitne = ({
             <Box>
               <FormLabel htmlFor="url">Image</FormLabel>
               <InputGroup>
-                {form.imageUrl.length > 0 ? (
+                {form.image.length > 0 ? (
                   <Input
                     type="url"
                     id="url"
-                    value={form.imageUrl}
+                    value={form.image}
                     onChange={({ target }) =>
-                      setProperty("imageUrl", target.value)
+                      setProperty("image", target.value)
                     }
                   />
                 ) : (
@@ -89,7 +95,7 @@ const NewRoutitne = ({
               <FormLabel htmlFor="category">Select category</FormLabel>
               <MultiSelect
                 label="Category"
-                options={["Leg", "Chest"]}
+                options={categryList}
                 onChange={(value) => setProperty("category", value)}
                 value={form.category}
                 size="sm"
@@ -104,6 +110,16 @@ const NewRoutitne = ({
                 min={0}
                 defaultValue={0}
               />
+            </Box>
+
+            <Box>
+              <Button
+                colorScheme="red"
+                mr={3}
+                onClick={() => deleteAction(form.id)}
+              >
+                Delete
+              </Button>
             </Box>
           </Stack>
         </DrawerBody>
