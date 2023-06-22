@@ -36,6 +36,7 @@ const RoutineBreakdown = () => {
     editRoutine,
     editExercice,
     isStarted,
+    deleteArray,
   } = useRoutineStore((state) => state);
   const { selected, setSelected } = useSearchStore((state) => state);
   const { fetchCategoryList, categryList } = useNewRoutineListStore(
@@ -60,15 +61,28 @@ const RoutineBreakdown = () => {
     }
   }, [selected]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!isReadOnly) {
-      console.log(exercices, `${apiURL}routines/save/${Number(id)}`);
-      axios.post(`${apiURL}routines/save/${Number(id)}`, {
-        title,
-        time,
-        category,
+      axios.post(`${apiURL}exercices/save/${Number(id)}`, {
         exercices,
       });
+      if (deleteArray.length > 0) {
+        console.log("entro en if");
+        const data = await axios.post(`${apiURL}exercices/deletelist`, {
+          deleteList: deleteArray,
+        });
+        console.log({
+          deleteList: deleteArray,
+        });
+      }
+      console.log(deleteArray);
+
+      // axios.post(`${apiURL}routines/save/${Number(id)}`, {
+      //   title,
+      //   time,
+      //   category,
+      //   exercices,
+      // });
     }
     setIsReadOnly(!isReadOnly);
   };
