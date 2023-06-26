@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { CalendarEvent, CalendorForm } from "../interfaces/CalendarEvent";
 import { getRandomColor } from "../utils/randomColor";
+import axios from "axios";
+import { apiURL } from "../utils/globals";
 
 interface CalendarStore {
   events: CalendarEvent[];
@@ -12,7 +14,7 @@ interface CalendarStore {
   submitForm: () => void;
   removeEvent: (id: number) => void;
 }
-export const useCalendarStore = create<CalendarStore>((set) => ({
+export const useCalendarStore = create<CalendarStore>((set, get) => ({
   events: [],
   isFormOpen: false,
   form: {
@@ -45,7 +47,15 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
       },
     }));
   },
-  submitForm() {
+  submitForm: async () => {
+    const { form } = get();
+    const newEvent = {
+      start: form.start,
+      end: form.start,
+      backgroundColor: getRandomColor(),
+      routine: { id: form.routineId },
+    };
+    await axios.post(`${apiURL}event`, newEvent);
     set((state) => ({
       isFormOpen: false,
       form: {
@@ -56,11 +66,9 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
       events: [
         ...state.events,
         {
+          ...newEvent,
           title: state.form.routineName,
           borderColor: "transparent",
-          start: state.form.start,
-          end: state.form.start,
-          backgroundColor: getRandomColor(),
           className: "success",
           routineId: state.form.routineId,
         },
