@@ -65,24 +65,20 @@ const RoutineBreakdown = () => {
     if (!isReadOnly) {
       axios.post(`${apiURL}exercices/save/${Number(id)}`, {
         exercices,
+        deleteList: deleteArray,
       });
-      if (deleteArray.length > 0) {
-        console.log("entro en if");
-        const data = await axios.post(`${apiURL}exercices/deletelist`, {
-          deleteList: deleteArray,
-        });
-        console.log({
-          deleteList: deleteArray,
-        });
-      }
-      console.log(deleteArray);
-
-      // axios.post(`${apiURL}routines/save/${Number(id)}`, {
+      // console.log({
       //   title,
       //   time,
       //   category,
       //   exercices,
       // });
+      axios.post(`${apiURL}routines/save/${Number(id)}`, {
+        title,
+        time,
+        category,
+        exercices,
+      });
     }
     setIsReadOnly(!isReadOnly);
   };
