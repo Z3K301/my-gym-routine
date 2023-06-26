@@ -67,17 +67,9 @@ const RoutineBreakdown = () => {
         exercices,
         deleteList: deleteArray,
       });
-      // console.log({
-      //   title,
-      //   time,
-      //   category,
-      //   exercices,
-      // });
       axios.post(`${apiURL}routines/save/${Number(id)}`, {
-        title,
         time,
         category,
-        exercices,
       });
     }
     setIsReadOnly(!isReadOnly);
