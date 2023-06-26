@@ -111,16 +111,17 @@ const NewRoutitne = ({
                 defaultValue={0}
               />
             </Box>
-
-            <Box>
-              <Button
-                colorScheme="red"
-                mr={3}
-                onClick={() => deleteAction(form.id)}
-              >
-                Delete
-              </Button>
-            </Box>
+            {form.id && (
+              <Box>
+                <Button
+                  colorScheme="red"
+                  mr={3}
+                  onClick={() => deleteAction(form.id)}
+                >
+                  Delete
+                </Button>
+              </Box>
+            )}
           </Stack>
         </DrawerBody>
 
