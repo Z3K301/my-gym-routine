@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { CalendarEvent, CalendorForm } from "../interfaces/CalendarEvent";
+import { getRandomColor } from "../utils/randomColor";
 
 interface CalendarStore {
   events: CalendarEvent[];
@@ -21,7 +22,7 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
   },
   setIsFormOpen: () => set((state) => ({ isFormOpen: !state.isFormOpen })),
   fetchEvents: async () => {
-    //TODO fetch
+    //TODO fetch by month
     set(() => ({
       events: [
         {
@@ -59,7 +60,7 @@ export const useCalendarStore = create<CalendarStore>((set) => ({
           borderColor: "transparent",
           start: state.form.start,
           end: state.form.start,
-          backgroundColor: "#68D391", //TODO Get random color
+          backgroundColor: getRandomColor(),
           className: "success",
           routineId: state.form.routineId,
         },
