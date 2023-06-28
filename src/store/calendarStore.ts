@@ -31,18 +31,17 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
   setIsFormOpen: () => set((state) => ({ isFormOpen: !state.isFormOpen })),
   fetchEvents: async () => {
     //TODO fetch by month
+    const { data } = await axios.post(`${apiURL}event/${getUserId()}`, {});
     set(() => ({
-      events: [
-        {
-          title: "All day conference",
-          borderColor: "transparent",
-          start: "2023-06-01",
-          end: "2023-06-01",
-          backgroundColor: "#68D391",
-          className: "success",
-          routineId: 1,
-        },
-      ],
+      events: data.map((event: any) => ({
+        title: event.routine_title,
+        borderColor: "transparent",
+        start: event.event_start.split("T")[0],
+        end: event.event_end.split("T")[0],
+        backgroundColor: event.event_backgroundColor,
+        className: "success",
+        routineId: event.routine_id,
+      })),
     }));
   },
   fetchRoutines: async () => {
@@ -91,6 +90,7 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
     }));
   },
   removeEvent(id) {
+    axios.delete(`${apiURL}event/${id}`);
     set((state) => ({
       events: state.events.filter((event) => event.routineId !== id),
     }));
