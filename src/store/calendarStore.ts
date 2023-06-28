@@ -36,8 +36,8 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
       events: data.map((event: any) => ({
         title: event.routine_title,
         borderColor: "transparent",
-        start: event.event_start.split("T")[0],
-        end: event.event_end.split("T")[0],
+        start: event.event_start,
+        end: event.event_end,
         backgroundColor: event.event_backgroundColor,
         className: "success",
         routineId: event.routine_id,
