@@ -15,10 +15,13 @@ const MyCalendar = () => {
     setFormProperty,
     submitForm,
     removeEvent,
+    fetchRoutines,
+    routineSelect,
   } = useCalendarStore((state) => state);
 
   useEffect(() => {
     fetchEvents();
+    fetchRoutines();
   }, []);
 
   const onDayClick = (e: any) => {
@@ -44,6 +47,7 @@ const MyCalendar = () => {
         onSubmit={submitForm}
         form={form}
         setFormProperty={setFormProperty}
+        routineList={routineSelect}
       />
     </>
   );

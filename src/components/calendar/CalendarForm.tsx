@@ -13,12 +13,14 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { CalendorForm } from "../../interfaces/CalendarEvent";
+import { Select as selectProps } from "../../interfaces/Select";
 interface FormProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
   form: CalendorForm;
   setFormProperty: (property: string, value: any) => void;
+  routineList: selectProps[];
 }
 const CalendarForm = ({
   isOpen,
@@ -26,6 +28,7 @@ const CalendarForm = ({
   onSubmit,
   setFormProperty,
   form,
+  routineList,
 }: FormProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,16 +55,20 @@ const CalendarForm = ({
             <Select
               placeholder="Select a routine"
               onChange={({ target }) => {
-                setFormProperty("routine", target.value);
+                setFormProperty("routineId", target.value);
                 setFormProperty(
                   "routineName",
                   target[target.selectedIndex].outerText
                 );
               }}
             >
-              <option value="1">Leg</option>
-              <option value="2">Chest</option>
-              <option value="3">Back</option>
+              {routineList.map((routine) => {
+                return (
+                  <option key={routine.id} value={routine.id}>
+                    {routine.name}
+                  </option>
+                );
+              })}
             </Select>
           </FormControl>
         </ModalBody>

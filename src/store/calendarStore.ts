@@ -3,12 +3,17 @@ import { CalendarEvent, CalendorForm } from "../interfaces/CalendarEvent";
 import { getRandomColor } from "../utils/randomColor";
 import axios from "axios";
 import { apiURL } from "../utils/globals";
+import { getUserId } from "../utils/auth/getUserId";
+import { Select } from "../interfaces/Select";
+import { RoutineList } from "../interfaces/RoutineList";
 
 interface CalendarStore {
   events: CalendarEvent[];
   form: CalendorForm;
-  fetchEvents: () => void;
   isFormOpen: boolean;
+  routineSelect: Select[];
+  fetchEvents: () => void;
+  fetchRoutines: () => void;
   setIsFormOpen: () => void;
   setFormProperty: (property: string, value: any) => void;
   submitForm: () => void;
@@ -16,6 +21,7 @@ interface CalendarStore {
 }
 export const useCalendarStore = create<CalendarStore>((set, get) => ({
   events: [],
+  routineSelect: [],
   isFormOpen: false,
   form: {
     start: "",
@@ -37,6 +43,15 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
           routineId: 1,
         },
       ],
+    }));
+  },
+  fetchRoutines: async () => {
+    const { data } = await axios.post(`${apiURL}routines/${getUserId()}`, {});
+    set(() => ({
+      routineSelect: data.map((routine: RoutineList) => ({
+        name: routine.title,
+        id: routine.id,
+      })),
     }));
   },
   setFormProperty: (property: string, value: any) => {
