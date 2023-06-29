@@ -34,6 +34,7 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
     const { data } = await axios.post(`${apiURL}event/${getUserId()}`, {});
     set(() => ({
       events: data.map((event: any) => ({
+        eventId: event.event_id,
         title: event.routine_title,
         borderColor: "transparent",
         start: event.event_start,

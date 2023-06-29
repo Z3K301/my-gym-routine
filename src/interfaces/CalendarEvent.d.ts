@@ -1,4 +1,5 @@
 export interface CalendarEvent {
+  eventId?: number;
   title: string;
   borderColor: string;
   start: string;
@@ -9,6 +10,7 @@ export interface CalendarEvent {
 }
 
 export interface CalendorForm {
+  id?: number;
   start: string;
   routineId: number;
   routineName: string;

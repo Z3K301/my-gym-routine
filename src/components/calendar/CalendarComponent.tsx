@@ -20,9 +20,9 @@ const CalendarComponent = ({
           onDateClick(e);
         }}
         eventDragStop={({ event }) => {
-          console.log(event.toJSON().extendedProps.routineId);
+          console.log(event.toJSON().extendedProps.eventId);
           event.remove();
-          onEventRemove(event.toJSON().extendedProps.routineId);
+          onEventRemove(event.toJSON().extendedProps.eventId);
         }}
         initialView="dayGridMonth"
         contentHeight="600"
