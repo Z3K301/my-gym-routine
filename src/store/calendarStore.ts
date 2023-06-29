@@ -89,8 +89,8 @@ export const useCalendarStore = create<CalendarStore>((set, get) => ({
       ],
     }));
   },
-  removeEvent(id) {
-    axios.delete(`${apiURL}event/${id}`);
+  removeEvent: async (id) => {
+    await axios.delete(`${apiURL}event/${id}`);
     set((state) => ({
       events: state.events.filter((event) => event.routineId !== id),
     }));
